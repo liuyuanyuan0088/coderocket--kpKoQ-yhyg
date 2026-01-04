@@ -4,19 +4,24 @@ function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
     {
-      image: 'https://hklingrui.com/static/upload/image/20251024/1761314468397066.jpg',
-      title: '專業資產管理',
-      subtitle: '以創新思維打造穩健投資組合'
+      image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop',
+      title: '綠色能源 · 美好未來',
+      subtitle: '投資可持續發展，共創綠色未來'
     },
     {
-      image: 'https://hklingrui.com/static/upload/image/20251024/1761314481945270.jpg',
-      title: '新能源投資領先者',
-      subtitle: '把握綠色經濟發展機遇'
+      image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2070&auto=format&fit=crop',
+      title: '太陽能領域的領導者',
+      subtitle: '專注東盟地區清潔能源投資'
     },
     {
-      image: 'https://hklingrui.com/static/upload/image/20251024/1761318501603440.jpg',
-      title: '東盟市場專家',
-      subtitle: '深耕區域市場，創造長期價值'
+      image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=2070&auto=format&fit=crop',
+      title: '風能 · 無限可能',
+      subtitle: '把握可再生能源發展機遇'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=2074&auto=format&fit=crop',
+      title: '智慧能源管理',
+      subtitle: '以科技驅動綠色投資'
     }
   ];
   useEffect(() => {
@@ -46,10 +51,24 @@ function Hero() {
               alt={slide.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-              <div className="text-center text-white px-4">
-                <h1 className="text-5xl md:text-6xl font-bold mb-4">{slide.title}</h1>
-                <p className="text-xl md:text-2xl">{slide.subtitle}</p>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent flex items-center">
+              <div className="mx-auto px-4 max-w-[1200px] w-full">
+                <div className="max-w-2xl">
+                  <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg">
+                    {slide.title}
+                  </h1>
+                  <p className="text-xl md:text-2xl text-white drop-shadow-md mb-8">
+                    {slide.subtitle}
+                  </p>
+                  <div className="flex gap-4">
+                    <button className="bg-[#10B981] hover:bg-[#059669] text-white px-8 py-3 rounded-lg font-bold transition-colors cursor-pointer shadow-lg">
+                      了解更多
+                    </button>
+                    <button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-2 border-white px-8 py-3 rounded-lg font-bold transition-colors cursor-pointer shadow-lg">
+                      聯繫我們
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -57,27 +76,30 @@ function Hero() {
       ))}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-3 transition-all cursor-pointer"
+        className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-3 transition-all cursor-pointer shadow-lg"
       >
-        <ChevronLeft className="h-6 w-6 text-[#34478F]" />
+        <ChevronLeft className="h-6 w-6 text-[#10B981]" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-3 transition-all cursor-pointer"
+        className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-3 transition-all cursor-pointer shadow-lg"
       >
-        <ChevronRight className="h-6 w-6 text-[#34478F]" />
+        <ChevronRight className="h-6 w-6 text-[#10B981]" />
       </button>
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-12 h-1 rounded-full transition-all cursor-pointer ${
-              index === currentSlide ? 'bg-white' : 'bg-white bg-opacity-50'
+            className={`h-2 rounded-full transition-all cursor-pointer ${
+              index === currentSlide 
+                ? 'bg-[#10B981] w-12' 
+                : 'bg-white/60 w-8 hover:bg-white/80'
             }`}
           />
         ))}
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
     </div>
   );
 }
