@@ -1,27 +1,14 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useContent } from '../contexts/ContentContext';
 function Hero() {
+  const { heroSlides } = useContent();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = [
+  const slides = heroSlides.length > 0 ? heroSlides : [
     {
       image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop',
       title: '綠色能源 · 美好未來',
       subtitle: '投資可持續發展，共創綠色未來'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2070&auto=format&fit=crop',
-      title: '太陽能領域的領導者',
-      subtitle: '專注東盟地區清潔能源投資'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=2070&auto=format&fit=crop',
-      title: '風能 · 無限可能',
-      subtitle: '把握可再生能源發展機遇'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=2074&auto=format&fit=crop',
-      title: '智慧能源管理',
-      subtitle: '以科技驅動綠色投資'
     }
   ];
   useEffect(() => {

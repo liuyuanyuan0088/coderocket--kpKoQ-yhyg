@@ -12,6 +12,12 @@ import IndustryNews from "./pages/IndustryNews.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Contact from "./pages/Contact.tsx";
 import AppDownload from "./pages/AppDownload.tsx";
+import AdminLogin from "./pages/admin/AdminLogin.tsx";
+import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
+import EditHero from "./pages/admin/EditHero.tsx";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
+import { ContentProvider } from "./contexts/ContentContext.tsx";
+import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
 import "./globals.css";
 // CODEROCKET
 const setupRouteChangeBridge = () => {
@@ -60,20 +66,65 @@ setupRouteChangeBridge();
 // /CODEROCKET
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/company-culture" element={<CompanyCulture />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/news/company" element={<CompanyNews />} />
-        <Route path="/news/industry" element={<IndustryNews />} />
-        <Route path="/news/faq" element={<FAQ />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/app-download" element={<AppDownload />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <ContentProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/company-culture" element={<CompanyCulture />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/news/company" element={<CompanyNews />} />
+            <Route path="/news/industry" element={<IndustryNews />} />
+            <Route path="/news/faq" element={<FAQ />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/app-download" element={<AppDownload />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-hero"
+              element={
+                <ProtectedRoute>
+                  <EditHero />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-services"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-team"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-news"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </ContentProvider>
+    </AuthProvider>
   </React.StrictMode>,
 );
