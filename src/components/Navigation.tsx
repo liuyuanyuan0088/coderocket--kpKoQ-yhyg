@@ -25,13 +25,11 @@ function Navigation() {
       <div className="mx-auto px-4 max-w-[1200px]">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3 cursor-pointer">
-            {/* 🔽 在這裡更換您的LOGO圖片URL 🔽 */}
             <img
-              src="YOUR_LOGO_URL_HERE"
+              src="https://jojdwiugelqhcajbccxn.supabase.co/storage/v1/object/public/images/1767523138256-aee6773b-c9d1-411a-8a9c-e6ccb7969649-0.png"
               alt="東盟新能資產管理有限公司"
-              className="h-12"
+              className="h-16"
             />
-            {/* 🔼 將 YOUR_LOGO_URL_HERE 替換為您的LOGO網址 🔼 */}
           </Link>
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item, index) => (
