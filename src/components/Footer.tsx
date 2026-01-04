@@ -44,13 +44,23 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t border-[#DEE1ED] border-opacity-20 pt-6 text-center">
-          <p className="text-sm text-[#DEE1ED]">
-            東盟新能資產管理有限公司 ©All Rights reserved
-          </p>
-          <p className="text-xs text-[#DEE1ED] mt-2">
-            未經許可不得複製、轉載或摘編，違者必究！
-          </p>
+        <div className="border-t border-[#DEE1ED] border-opacity-20 pt-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="text-center md:text-left">
+              <p className="text-sm text-[#DEE1ED]">
+                東盟新能資產管理有限公司 ©All Rights reserved
+              </p>
+              <p className="text-xs text-[#DEE1ED] mt-2">
+                未經許可不得複製、轉載或摘編，違者必究！
+              </p>
+            </div>
+            <Link 
+              to="/admin/login"
+              className="text-xs text-[#DEE1ED] hover:text-white transition-colors cursor-pointer opacity-50 hover:opacity-100"
+            >
+              🔐 管理員登入
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
