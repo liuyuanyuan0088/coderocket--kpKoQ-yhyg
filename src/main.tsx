@@ -22,6 +22,9 @@ import EditNews from "./pages/admin/EditNews.tsx";
 import EditFAQ from "./pages/admin/EditFAQ.tsx";
 import EditValues from "./pages/admin/EditValues.tsx";
 import EditCulture from "./pages/admin/EditCulture.tsx";
+import EditHomePage from "./pages/admin/EditHomePage.tsx";
+import EditAboutCards from "./pages/admin/EditAboutCards.tsx";
+import EditTeamCulture from "./pages/admin/EditTeamCulture.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { ContentProvider } from "./contexts/ContentContext.tsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
@@ -113,6 +116,22 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               }
             />
             <Route
+              path="/admin/edit-homepage"
+              element={
+                <ProtectedRoute>
+                  <EditHomePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-about-cards"
+              element={
+                <ProtectedRoute>
+                  <EditAboutCards />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/admin/edit-services"
               element={
                 <ProtectedRoute>
@@ -125,6 +144,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               element={
                 <ProtectedRoute>
                   <EditTeam />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-team-culture"
+              element={
+                <ProtectedRoute>
+                  <EditTeamCulture />
                 </ProtectedRoute>
               }
             />

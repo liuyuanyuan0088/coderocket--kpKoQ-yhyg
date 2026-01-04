@@ -4,7 +4,18 @@ interface HeroSlide {
   title: string;
   subtitle: string;
 }
-interface Service {
+interface AboutCard {
+  title: string;
+  image: string;
+  description: string;
+}
+interface CoreValue {
+  icon: string;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+interface ServiceItem {
   title: string;
   subtitle: string;
   description: string;
@@ -21,6 +32,13 @@ interface TeamMember {
   background: string;
   focus: string;
   belief: string;
+  avatar?: string;
+}
+interface TeamCultureItem {
+  icon: string;
+  title: string;
+  subtitle: string;
+  description: string;
 }
 interface NewsArticle {
   id: string;
@@ -36,12 +54,6 @@ interface FAQItem {
   question: string;
   answer: string;
 }
-interface CoreValue {
-  icon: string;
-  title: string;
-  subtitle: string;
-  description: string;
-}
 interface CompanyCulture {
   mission: {
     title: string;
@@ -53,6 +65,7 @@ interface CompanyCulture {
     subtitle: string;
     description: string;
   };
+  coreValuesIntro: string;
 }
 interface SiteSettings {
   companyName: string;
@@ -65,24 +78,40 @@ interface SiteSettings {
   teamTitle: string;
   teamSubtitle: string;
   teamDescription: string;
+  footerText: string;
+  footerCopyright: string;
+}
+interface HomePageTexts {
+  aboutSectionTitle: string;
+  aboutSectionSubtitle: string;
+  aboutSectionDescription: string;
+  coreValuesSectionTitle: string;
+  coreValuesSectionSubtitle: string;
+  coreValuesSectionDescription: string;
 }
 interface ContentContextType {
   heroSlides: HeroSlide[];
-  services: Service[];
+  aboutCards: AboutCard[];
+  coreValues: CoreValue[];
+  services: ServiceItem[];
   teamMembers: TeamMember[];
+  teamCulture: TeamCultureItem[];
   newsArticles: NewsArticle[];
   faqItems: FAQItem[];
-  coreValues: CoreValue[];
   companyCulture: CompanyCulture;
   siteSettings: SiteSettings;
+  homePageTexts: HomePageTexts;
   updateHeroSlides: (slides: HeroSlide[]) => void;
-  updateServices: (services: Service[]) => void;
+  updateAboutCards: (cards: AboutCard[]) => void;
+  updateCoreValues: (values: CoreValue[]) => void;
+  updateServices: (services: ServiceItem[]) => void;
   updateTeamMembers: (members: TeamMember[]) => void;
+  updateTeamCulture: (culture: TeamCultureItem[]) => void;
   updateNewsArticles: (articles: NewsArticle[]) => void;
   updateFAQItems: (items: FAQItem[]) => void;
-  updateCoreValues: (values: CoreValue[]) => void;
   updateCompanyCulture: (culture: CompanyCulture) => void;
   updateSiteSettings: (settings: SiteSettings) => void;
+  updateHomePageTexts: (texts: HomePageTexts) => void;
 }
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 const defaultHeroSlides: HeroSlide[] = [
@@ -100,40 +129,23 @@ const defaultHeroSlides: HeroSlide[] = [
     image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=2070&auto=format&fit=crop',
     title: '風能 · 無限可能',
     subtitle: '把握可再生能源發展機遇'
+  }
+];
+const defaultAboutCards: AboutCard[] = [
+  {
+    title: '公司文化',
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop',
+    description: '秉持專業、創新、穩健的經營理念'
   },
   {
-    image: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=2074&auto=format&fit=crop',
-    title: '智慧能源管理',
-    subtitle: '以科技驅動綠色投資'
-  }
-];
-const defaultServices: Service[] = [
+    title: '服務與解決方案',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop',
+    description: '提供全方位資產管理與投資顧問服務'
+  },
   {
-    title: '新能源产业研究与咨询',
-    subtitle: 'New Energy Industry Research & Advisory',
-    description: '我们围绕新能源及可持续产业，为企业、机构及合作伙伴提供以产业为导向的研究与咨询支持。',
-    icon: '📊',
-    services: [
-      '产业与政策研究 - 围绕新能源整车、动力电池、光伏、风电、储能及关键资源领域',
-      '市场趋势分析 - 结合区域市场特征，分析新能源产业发展阶段',
-      '决策支持建议 - 基于研究成果，提供战略与项目参考建议'
-    ],
-    value: [
-      '提升对新能源产业与区域市场的系统性认知',
-      '降低信息不对称带来的决策不确定性',
-      '为中长期发展方向提供研究支持'
-    ]
-  }
-];
-const defaultTeamMembers: TeamMember[] = [
-  {
-    name: '姜云成',
-    nameEn: 'Jiang Yuncheng',
-    position: '创始人',
-    positionEn: 'Founder',
-    background: '姜云成先生长期从事产业协作与企业发展相关工作，具备跨区域、跨产业的实践经验。',
-    focus: '新能源产业研究｜跨境产业协作｜项目推动与资源协调｜长期发展战略',
-    belief: '"尊重产业规律，顺应时代趋势，在长期主义中创造真实价值。"'
+    title: '關於我們',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop',
+    description: '專注於東盟地區新能源資產投資管理'
   }
 ];
 const defaultCoreValues: CoreValue[] = [
@@ -168,6 +180,55 @@ const defaultCoreValues: CoreValue[] = [
     description: '新能源产业不断演进，我们亦持续成长。通过学习、实践与复盘，不断优化专业能力与协作方式，在变化中保持清醒，在进化中坚守初心。'
   }
 ];
+const defaultServices: ServiceItem[] = [
+  {
+    title: '新能源产业研究与咨询',
+    subtitle: 'New Energy Industry Research & Advisory',
+    description: '我们围绕新能源及可持续产业，为企业、机构及合作伙伴提供以产业为导向的研究与咨询支持。',
+    icon: '📊',
+    services: [
+      '产业与政策研究 - 围绕新能源整车、动力电池、光伏、风电、储能及关键资源领域',
+      '市场趋势分析 - 结合区域市场特征，分析新能源产业发展阶段',
+      '决策支持建议 - 基于研究成果，提供战略与项目参考建议'
+    ],
+    value: [
+      '提升对新能源产业与区域市场的系统性认知',
+      '降低信息不对称带来的决策不确定性',
+      '为中长期发展方向提供研究支持'
+    ]
+  }
+];
+const defaultTeamMembers: TeamMember[] = [
+  {
+    name: '姜云成',
+    nameEn: 'Jiang Yuncheng',
+    position: '创始人',
+    positionEn: 'Founder',
+    background: '姜云成先生长期从事产业协作与企业发展相关工作，具备跨区域、跨产业的实践经验。',
+    focus: '新能源产业研究｜跨境产业协作｜项目推动与资源协调｜长期发展战略',
+    belief: '"尊重产业规律，顺应时代趋势，在长期主义中创造真实价值。"'
+  }
+];
+const defaultTeamCulture: TeamCultureItem[] = [
+  {
+    icon: '🤝',
+    title: '协作共进',
+    subtitle: 'Cross-functional Collaboration',
+    description: '我们鼓励跨职能、跨背景的深度协作。通过不同专业视角的融合，形成更全面、更稳健的判断，共同推动项目落地。'
+  },
+  {
+    icon: '📚',
+    title: '持续学习',
+    subtitle: 'Continuous Learning',
+    description: '新能源产业快速演进，我们保持开放与学习的心态。通过研究、复盘与经验分享，不断提升团队的专业能力与产业理解深度。'
+  },
+  {
+    icon: '🌱',
+    title: '理性创新',
+    subtitle: 'Rational Innovation',
+    description: '我们尊重创新，但同样重视可行性与风险边界。在保持开放思维的同时，坚持理性判断，让创新服务于长期价值。'
+  }
+];
 const defaultCompanyCulture: CompanyCulture = {
   mission: {
     title: '连接产业价值，推动可持续未来',
@@ -178,7 +239,8 @@ const defaultCompanyCulture: CompanyCulture = {
     title: '成为值得信赖的新能源产业研究与协作平台',
     subtitle: 'Vision',
     description: '立足中国，连接东盟，面向全球。我们致力于打造一个具备前瞻视野、专业深度与高度信任度的新能源产业研究与协作平台，成为政府机构、产业伙伴及合作方在新能源领域中长期可靠的战略支持者与协作伙伴。'
-  }
+  },
+  coreValuesIntro: '在新能源产业与跨境合作的复杂环境中，我们以以下五大价值观，指引团队稳健前行。'
 };
 const defaultSiteSettings: SiteSettings = {
   companyName: '東盟新能資產管理有限公司',
@@ -190,20 +252,42 @@ const defaultSiteSettings: SiteSettings = {
   workingHours: '週一至週五 9:00 - 18:00',
   teamTitle: '瑞行团队',
   teamSubtitle: '以瑞势顺时代，以笃行筑长远',
-  teamDescription: '顺应产业发展趋势，以踏实执行与专业协作，推动长期价值的形成。'
+  teamDescription: '顺应产业发展趋势，以踏实执行与专业协作，推动长期价值的形成。',
+  footerText: '東盟新能資產管理有限公司',
+  footerCopyright: '未經許可不得複製、轉載或摘編，違者必究！'
+};
+const defaultHomePageTexts: HomePageTexts = {
+  aboutSectionTitle: '瑞行团队',
+  aboutSectionSubtitle: '以瑞势顺时代，以笃行筑长远',
+  aboutSectionDescription: '顺应产业发展趋势，以踏实执行与专业协作，推动长期价值的形成。',
+  coreValuesSectionTitle: '核心价值观',
+  coreValuesSectionSubtitle: 'Core Values',
+  coreValuesSectionDescription: '在新能源产业与跨境合作的复杂环境中，我们以以下五大价值观，指引团队稳健前行'
 };
 export function ContentProvider({ children }: { children: React.ReactNode }) {
   const [heroSlides, setHeroSlides] = useState<HeroSlide[]>(() => {
     const stored = localStorage.getItem('heroSlides');
     return stored ? JSON.parse(stored) : defaultHeroSlides;
   });
-  const [services, setServices] = useState<Service[]>(() => {
+  const [aboutCards, setAboutCards] = useState<AboutCard[]>(() => {
+    const stored = localStorage.getItem('aboutCards');
+    return stored ? JSON.parse(stored) : defaultAboutCards;
+  });
+  const [coreValues, setCoreValues] = useState<CoreValue[]>(() => {
+    const stored = localStorage.getItem('coreValues');
+    return stored ? JSON.parse(stored) : defaultCoreValues;
+  });
+  const [services, setServices] = useState<ServiceItem[]>(() => {
     const stored = localStorage.getItem('services');
     return stored ? JSON.parse(stored) : defaultServices;
   });
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>(() => {
     const stored = localStorage.getItem('teamMembers');
     return stored ? JSON.parse(stored) : defaultTeamMembers;
+  });
+  const [teamCulture, setTeamCulture] = useState<TeamCultureItem[]>(() => {
+    const stored = localStorage.getItem('teamCulture');
+    return stored ? JSON.parse(stored) : defaultTeamCulture;
   });
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>(() => {
     const stored = localStorage.getItem('newsArticles');
@@ -213,10 +297,6 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     const stored = localStorage.getItem('faqItems');
     return stored ? JSON.parse(stored) : [];
   });
-  const [coreValues, setCoreValues] = useState<CoreValue[]>(() => {
-    const stored = localStorage.getItem('coreValues');
-    return stored ? JSON.parse(stored) : defaultCoreValues;
-  });
   const [companyCulture, setCompanyCulture] = useState<CompanyCulture>(() => {
     const stored = localStorage.getItem('companyCulture');
     return stored ? JSON.parse(stored) : defaultCompanyCulture;
@@ -225,9 +305,19 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     const stored = localStorage.getItem('siteSettings');
     return stored ? JSON.parse(stored) : defaultSiteSettings;
   });
+  const [homePageTexts, setHomePageTexts] = useState<HomePageTexts>(() => {
+    const stored = localStorage.getItem('homePageTexts');
+    return stored ? JSON.parse(stored) : defaultHomePageTexts;
+  });
   useEffect(() => {
     localStorage.setItem('heroSlides', JSON.stringify(heroSlides));
   }, [heroSlides]);
+  useEffect(() => {
+    localStorage.setItem('aboutCards', JSON.stringify(aboutCards));
+  }, [aboutCards]);
+  useEffect(() => {
+    localStorage.setItem('coreValues', JSON.stringify(coreValues));
+  }, [coreValues]);
   useEffect(() => {
     localStorage.setItem('services', JSON.stringify(services));
   }, [services]);
@@ -235,39 +325,48 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('teamMembers', JSON.stringify(teamMembers));
   }, [teamMembers]);
   useEffect(() => {
+    localStorage.setItem('teamCulture', JSON.stringify(teamCulture));
+  }, [teamCulture]);
+  useEffect(() => {
     localStorage.setItem('newsArticles', JSON.stringify(newsArticles));
   }, [newsArticles]);
   useEffect(() => {
     localStorage.setItem('faqItems', JSON.stringify(faqItems));
   }, [faqItems]);
   useEffect(() => {
-    localStorage.setItem('coreValues', JSON.stringify(coreValues));
-  }, [coreValues]);
-  useEffect(() => {
     localStorage.setItem('companyCulture', JSON.stringify(companyCulture));
   }, [companyCulture]);
   useEffect(() => {
     localStorage.setItem('siteSettings', JSON.stringify(siteSettings));
   }, [siteSettings]);
+  useEffect(() => {
+    localStorage.setItem('homePageTexts', JSON.stringify(homePageTexts));
+  }, [homePageTexts]);
   return (
     <ContentContext.Provider
       value={{
         heroSlides,
+        aboutCards,
+        coreValues,
         services,
         teamMembers,
+        teamCulture,
         newsArticles,
         faqItems,
-        coreValues,
         companyCulture,
         siteSettings,
+        homePageTexts,
         updateHeroSlides: setHeroSlides,
+        updateAboutCards: setAboutCards,
+        updateCoreValues: setCoreValues,
         updateServices: setServices,
         updateTeamMembers: setTeamMembers,
+        updateTeamCulture: setTeamCulture,
         updateNewsArticles: setNewsArticles,
         updateFAQItems: setFAQItems,
-        updateCoreValues: setCoreValues,
         updateCompanyCulture: setCompanyCulture,
         updateSiteSettings: setSiteSettings,
+        updateHomePageTexts: setHomePageTexts,
       }}
     >
       {children}
