@@ -24,8 +24,11 @@ function About() {
     <section className="py-20 bg-[#F5F5F5]" id="about">
       <div className="mx-auto px-4 max-w-[1200px]">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-[#34478F] mb-4">凌瑞團隊</h2>
-          <p className="text-lg text-[#5A5A5A]">以凌雲之志謀未來，以瑞氣盈門築財富</p>
+          <h2 className="text-4xl font-bold text-[#10B981] mb-4">瑞行团队</h2>
+          <p className="text-lg text-[#5A5A5A] mb-3">以瑞势顺时代，以笃行筑长远</p>
+          <p className="text-base text-[#666666]">
+            顺应产业发展趋势，以踏实执行与专业协作，推动长期价值的形成。
+          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {sections.map((section, index) => (
@@ -42,7 +45,7 @@ function About() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-[#34478F] mb-2">{section.title}</h3>
+                <h3 className="text-xl font-bold text-[#10B981] mb-2">{section.title}</h3>
                 <p className="text-[#666666]">{section.description}</p>
               </div>
             </Link>
@@ -51,7 +54,7 @@ function About() {
             to="/app-download"
             className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer"
           >
-            <div className="relative h-48 bg-gradient-to-br from-[#34478F] to-[#5B6FB5] flex items-center justify-center">
+            <div className="relative h-48 bg-gradient-to-br from-[#10B981] to-[#059669] flex items-center justify-center">
               <div className="text-center text-white">
                 <svg
                   className="mx-auto mb-3 h-16 w-16"
@@ -64,7 +67,7 @@ function About() {
               </div>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold text-[#34478F] mb-2">App下載</h3>
+              <h3 className="text-xl font-bold text-[#10B981] mb-2">App下載</h3>
               <p className="text-[#666666]">隨時隨地掌握投資動態</p>
             </div>
           </Link>
