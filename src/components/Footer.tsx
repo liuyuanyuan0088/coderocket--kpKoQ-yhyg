@@ -11,7 +11,7 @@ function Footer() {
                 公司文化
               </Link>
               <Link to="/about" className="block text-[#DEE1ED] hover:text-white transition-colors cursor-pointer">
-                凌瑞團隊
+                瑞行团队
               </Link>
               <Link to="/services" className="block text-[#DEE1ED] hover:text-white transition-colors cursor-pointer">
                 核心價值
