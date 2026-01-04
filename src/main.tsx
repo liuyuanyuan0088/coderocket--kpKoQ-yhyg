@@ -15,6 +15,13 @@ import AppDownload from "./pages/AppDownload.tsx";
 import AdminLogin from "./pages/admin/AdminLogin.tsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
 import EditHero from "./pages/admin/EditHero.tsx";
+import EditSettings from "./pages/admin/EditSettings.tsx";
+import EditServices from "./pages/admin/EditServices.tsx";
+import EditTeam from "./pages/admin/EditTeam.tsx";
+import EditNews from "./pages/admin/EditNews.tsx";
+import EditFAQ from "./pages/admin/EditFAQ.tsx";
+import EditValues from "./pages/admin/EditValues.tsx";
+import EditCulture from "./pages/admin/EditCulture.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { ContentProvider } from "./contexts/ContentContext.tsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
@@ -98,10 +105,18 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               }
             />
             <Route
+              path="/admin/edit-settings"
+              element={
+                <ProtectedRoute>
+                  <EditSettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/admin/edit-services"
               element={
                 <ProtectedRoute>
-                  <AdminDashboard />
+                  <EditServices />
                 </ProtectedRoute>
               }
             />
@@ -109,7 +124,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               path="/admin/edit-team"
               element={
                 <ProtectedRoute>
-                  <AdminDashboard />
+                  <EditTeam />
                 </ProtectedRoute>
               }
             />
@@ -117,7 +132,31 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               path="/admin/edit-news"
               element={
                 <ProtectedRoute>
-                  <AdminDashboard />
+                  <EditNews />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-faq"
+              element={
+                <ProtectedRoute>
+                  <EditFAQ />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-values"
+              element={
+                <ProtectedRoute>
+                  <EditValues />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-culture"
+              element={
+                <ProtectedRoute>
+                  <EditCulture />
                 </ProtectedRoute>
               }
             />

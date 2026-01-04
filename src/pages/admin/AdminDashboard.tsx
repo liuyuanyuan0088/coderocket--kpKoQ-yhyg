@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useContent } from '../../contexts/ContentContext';
 import { 
   Image, 
   Briefcase, 
@@ -7,22 +8,48 @@ import {
   Newspaper, 
   Settings,
   LogOut,
-  Home
+  Home,
+  FileText,
+  MessageSquare,
+  Award,
+  Building2
 } from 'lucide-react';
 function AdminDashboard() {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const { heroSlides, services, teamMembers, newsArticles, faqItems } = useContent();
   const handleLogout = () => {
     logout();
     navigate('/admin/login');
   };
   const menuItems = [
     {
+      title: '網站設置',
+      description: '公司名稱、Logo、聯繫方式',
+      icon: Settings,
+      path: '/admin/edit-settings',
+      color: 'from-gray-500 to-gray-600'
+    },
+    {
       title: '輪播圖管理',
       description: '編輯首頁輪播圖內容',
       icon: Image,
       path: '/admin/edit-hero',
       color: 'from-blue-500 to-blue-600'
+    },
+    {
+      title: '公司文化',
+      description: '編輯使命、願景、價值觀',
+      icon: Building2,
+      path: '/admin/edit-culture',
+      color: 'from-indigo-500 to-indigo-600'
+    },
+    {
+      title: '核心價值觀',
+      description: '編輯五大核心價值',
+      icon: Award,
+      path: '/admin/edit-values',
+      color: 'from-yellow-500 to-yellow-600'
     },
     {
       title: '服務管理',
@@ -44,6 +71,13 @@ function AdminDashboard() {
       icon: Newspaper,
       path: '/admin/edit-news',
       color: 'from-orange-500 to-orange-600'
+    },
+    {
+      title: 'FAQ管理',
+      description: '編輯常見問題',
+      icon: MessageSquare,
+      path: '/admin/edit-faq',
+      color: 'from-pink-500 to-pink-600'
     }
   ];
   return (
@@ -81,9 +115,9 @@ function AdminDashboard() {
       <div className="mx-auto px-4 max-w-[1200px] py-12">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-2">管理控制台</h1>
-          <p className="text-gray-600">管理網站內容和設置</p>
+          <p className="text-gray-600">管理網站所有內容和設置</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
             return (
@@ -101,23 +135,28 @@ function AdminDashboard() {
             );
           })}
         </div>
-        <div className="mt-12 bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">快速操作</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">數據統計</h2>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="border-2 border-gray-200 rounded-lg p-4">
-              <h3 className="font-bold text-gray-800 mb-2">數據統計</h3>
-              <p className="text-3xl font-bold text-[#10B981]">4</p>
-              <p className="text-sm text-gray-600">輪播圖數量</p>
+              <h3 className="font-bold text-gray-800 mb-2 text-sm">輪播圖</h3>
+              <p className="text-3xl font-bold text-[#10B981]">{heroSlides.length}</p>
             </div>
             <div className="border-2 border-gray-200 rounded-lg p-4">
-              <h3 className="font-bold text-gray-800 mb-2">服務項目</h3>
-              <p className="text-3xl font-bold text-[#10B981]">6</p>
-              <p className="text-sm text-gray-600">服務數量</p>
+              <h3 className="font-bold text-gray-800 mb-2 text-sm">服務項目</h3>
+              <p className="text-3xl font-bold text-[#10B981]">{services.length}</p>
             </div>
             <div className="border-2 border-gray-200 rounded-lg p-4">
-              <h3 className="font-bold text-gray-800 mb-2">團隊成員</h3>
-              <p className="text-3xl font-bold text-[#10B981]">3</p>
-              <p className="text-sm text-gray-600">成員數量</p>
+              <h3 className="font-bold text-gray-800 mb-2 text-sm">團隊成員</h3>
+              <p className="text-3xl font-bold text-[#10B981]">{teamMembers.length}</p>
+            </div>
+            <div className="border-2 border-gray-200 rounded-lg p-4">
+              <h3 className="font-bold text-gray-800 mb-2 text-sm">新聞文章</h3>
+              <p className="text-3xl font-bold text-[#10B981]">{newsArticles.length}</p>
+            </div>
+            <div className="border-2 border-gray-200 rounded-lg p-4">
+              <h3 className="font-bold text-gray-800 mb-2 text-sm">FAQ條目</h3>
+              <p className="text-3xl font-bold text-[#10B981]">{faqItems.length}</p>
             </div>
           </div>
         </div>
