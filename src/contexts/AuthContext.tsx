@@ -5,7 +5,7 @@ interface AuthContextType {
   logout: () => void;
 }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-const ADMIN_PASSWORD = 'admin123'; // 在生产环境中应该使用更安全的方式
+const ADMIN_PASSWORD = 'admin123';
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('adminAuth') === 'true';

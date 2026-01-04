@@ -36,7 +36,7 @@ function Navigation() {
               <div key={index} className="relative group">
                 <Link
                   to={item.href}
-                  className="text-[#333333] hover:text-[#34478F] transition-colors text-sm font-medium cursor-pointer"
+                  className="text-[#333333] hover:text-[#10B981] transition-colors text-sm font-medium cursor-pointer"
                 >
                   {item.label}
                 </Link>
@@ -46,7 +46,7 @@ function Navigation() {
                       <Link
                         key={subindex}
                         to={subitem.href}
-                        className="block px-6 py-2 text-[#333333] hover:bg-[#ECF0F6] hover:text-[#34478F] transition-colors text-sm cursor-pointer whitespace-nowrap"
+                        className="block px-6 py-2 text-[#333333] hover:bg-[#ECF0F6] hover:text-[#10B981] transition-colors text-sm cursor-pointer whitespace-nowrap"
                       >
                         {subitem.label}
                       </Link>
@@ -69,7 +69,7 @@ function Navigation() {
               <div key={index}>
                 <Link
                   to={item.href}
-                  className="block py-3 text-[#333333] hover:text-[#34478F] transition-colors cursor-pointer"
+                  className="block py-3 text-[#333333] hover:text-[#10B981] transition-colors cursor-pointer"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.label}
@@ -80,7 +80,7 @@ function Navigation() {
                       <Link
                         key={subindex}
                         to={subitem.href}
-                        className="block py-2 text-sm text-[#666666] hover:text-[#34478F] transition-colors cursor-pointer"
+                        className="block py-2 text-sm text-[#666666] hover:text-[#10B981] transition-colors cursor-pointer"
                         onClick={() => setIsOpen(false)}
                       >
                         {subitem.label}

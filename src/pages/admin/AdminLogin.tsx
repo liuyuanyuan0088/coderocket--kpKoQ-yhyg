@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Lock } from 'lucide-react';
 function AdminLogin() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,11 +17,6 @@ function AdminLogin() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#10B981] to-[#059669] flex items-center justify-center px-4">
       <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
-        <div className="flex justify-center mb-6">
-          <div className="bg-[#10B981] rounded-full p-4">
-            <Lock className="h-8 w-8 text-white" />
-          </div>
-        </div>
         <h1 className="text-3xl font-bold text-center text-[#10B981] mb-2">
           管理員登入
         </h1>
