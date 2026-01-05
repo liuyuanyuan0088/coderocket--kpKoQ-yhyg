@@ -1,15 +1,46 @@
 # 東盟新能資產管理有限公司 - 內容管理系統
 ## 🌐 網站訪問
-**主網站**: https://assetmanagement.coderocket.app
-**控制台入口**: https://assetmanagement.coderocket.app/admin/login
+**主網站**: https://asean-newenergy.com
+**控制台入口**: https://asean-newenergy.com/admin/login
+**备用地址**: https://assetmanagement.coderocket.app
+## 🔧 域名配置信息
+### 自定义域名
+  - 主DNS: a.share-dns.com
+  - 辅助DNS: b.share-dns.net
+### 域名DNS设置步骤
+1. **登录域名注册商控制台**
+   - 找到域名 asean-newenergy.com 的DNS管理页面
+2. **配置DNS服务器**
+   - 将域名的DNS服务器修改为：
+     - a.share-dns.com
+     - b.share-dns.net
+3. **添加DNS记录**（在DNS服务商处配置）
+   - **A记录**：
+     ```
+     类型: A
+     主机记录: @
+     记录值: [CodeRocket服务器IP]
+     TTL: 600
+     ```
+   - **CNAME记录**（www子域名）：
+     ```
+     类型: CNAME
+     主机记录: www
+     记录值: assetmanagement.coderocket.app
+     TTL: 600
+     ```
+4. **等待DNS生效**
+   - DNS记录通常需要10分钟到48小时生效
+   - 使用 `nslookup asean-newenergy.com` 命令检查DNS是否生效
 ## 🎯 控制台訪問方式
-### 方法 1: 直接URL訪問（推薦）
-直接在瀏覽器輸入：
+### 方法 1: 使用主域名（推薦）
+```
+https://asean-newenergy.com/admin/login
+```
+### 方法 2: 使用备用域名
 ```
 https://assetmanagement.coderocket.app/admin/login
 ```
-### 方法 2: 從任何頁面訪問
-在網站任何頁面的URL後添加 `/admin/login`
 ## 🔐 登入憑證
 ## 📝 可管理的內容
 ### 1. 網站基本設置
@@ -23,7 +54,7 @@ https://assetmanagement.coderocket.app/admin/login
 ### 9. App下載頁面
 ### 10. 聯繫頁面
 ## 💡 使用說明
-1. 訪問 `https://assetmanagement.coderocket.app/admin/login` 登入
+1. 訪問 `https://asean-newenergy.com/admin/login` 登入
 2. 選擇要編輯的內容模塊
 3. 編輯文字或上傳圖片
 4. 點擊「保存更改」
@@ -46,7 +77,7 @@ https://assetmanagement.coderocket.app/admin/login
 ## 🔒 安全提示
 ## 🌐 網站結構
 ```
-https://assetmanagement.coderocket.app
+https://asean-newenergy.com
 ├── /                          # 首頁
 ├── /company-culture           # 公司文化
 ├── /services                  # 服務與解決方案
@@ -60,9 +91,23 @@ https://assetmanagement.coderocket.app
 └── /admin                     # 管理後台
     └── /admin/login           # 登入頁面
 ```
+## 🔧 技術配置
+### 域名信息
+  - a.share-dns.com
+  - b.share-dns.net
+### DNS检查命令
+```bash
+# 检查域名解析
+nslookup asean-newenergy.com
+# 检查DNS服务器
+dig asean-newenergy.com
+# 追踪DNS解析
+dig asean-newenergy.com +trace
+```
 ## 📞 技術支持
 如有問題，請聯繫技術支持團隊。
-**網站域名**: `assetmanagement.coderocket.app`  
+**主域名**: `asean-newenergy.com`  
+**备用域名**: `assetmanagement.coderocket.app`  
 **部署平台**: CodeRocket  
 **框架**: React + TypeScript + Vite  
 **樣式**: Tailwind CSS v4
