@@ -13,7 +13,9 @@ import {
   Award,
   Building2,
   FileText,
-  Palette
+  Palette,
+  Smartphone,
+  Phone
 } from 'lucide-react';
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -75,7 +77,7 @@ function AdminDashboard() {
     },
     {
       title: '團隊管理',
-      description: '團隊成員資訊',
+      description: '團隊成員、頭像',
       icon: Users,
       path: '/admin/edit-team',
       color: 'from-teal-500 to-teal-600'
@@ -100,6 +102,20 @@ function AdminDashboard() {
       icon: MessageSquare,
       path: '/admin/edit-faq',
       color: 'from-red-500 to-red-600'
+    },
+    {
+      title: 'App下載',
+      description: '下載頁面、鏈接、QR碼',
+      icon: Smartphone,
+      path: '/admin/edit-app-download',
+      color: 'from-violet-500 to-violet-600'
+    },
+    {
+      title: '聯繫頁面',
+      description: '聯繫頁面文字',
+      icon: Phone,
+      path: '/admin/edit-contact',
+      color: 'from-emerald-500 to-emerald-600'
     }
   ];
   return (

@@ -25,6 +25,8 @@ import EditCulture from "./pages/admin/EditCulture.tsx";
 import EditHomePage from "./pages/admin/EditHomePage.tsx";
 import EditAboutCards from "./pages/admin/EditAboutCards.tsx";
 import EditTeamCulture from "./pages/admin/EditTeamCulture.tsx";
+import EditAppDownload from "./pages/admin/EditAppDownload.tsx";
+import EditContact from "./pages/admin/EditContact.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { ContentProvider } from "./contexts/ContentContext.tsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
@@ -184,6 +186,22 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               element={
                 <ProtectedRoute>
                   <EditCulture />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-app-download"
+              element={
+                <ProtectedRoute>
+                  <EditAppDownload />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edit-contact"
+              element={
+                <ProtectedRoute>
+                  <EditContact />
                 </ProtectedRoute>
               }
             />

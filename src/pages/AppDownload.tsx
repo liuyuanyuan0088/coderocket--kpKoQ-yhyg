@@ -1,46 +1,34 @@
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import { useContent } from '../contexts/ContentContext';
 function AppDownload() {
+  const { appDownloadContent } = useContent();
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
       <div className="pt-32 pb-20">
         <div className="mx-auto px-4 max-w-[1200px]">
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-[#10B981] mb-6">App下載</h1>
-            <p className="text-xl text-[#5A5A5A]">隨時隨地掌握投資動態</p>
+            <h1 className="text-5xl font-bold text-[#10B981] mb-6">{appDownloadContent.pageTitle}</h1>
+            <p className="text-xl text-[#5A5A5A]">{appDownloadContent.pageSubtitle}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
             <div className="bg-gradient-to-br from-[#10B981] to-[#059669] rounded-lg p-12 text-white">
-              <h2 className="text-3xl font-bold mb-6">功能特色</h2>
+              <h2 className="text-3xl font-bold mb-6">{appDownloadContent.featuresTitle}</h2>
               <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">✓</span>
-                  <span>實時查看投資組合和收益情況</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">✓</span>
-                  <span>接收重要通知和市場資訊</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">✓</span>
-                  <span>快速進行投資操作和資金劃轉</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">✓</span>
-                  <span>查閱詳細的投資報告</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">✓</span>
-                  <span>與專業顧問在線溝通</span>
-                </li>
+                {appDownloadContent.features.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <span className="text-2xl">✓</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="bg-[#ECF0F6] rounded-lg p-12">
-              <h2 className="text-3xl font-bold text-[#10B981] mb-8 text-center">立即下載</h2>
+              <h2 className="text-3xl font-bold text-[#10B981] mb-8 text-center">{appDownloadContent.downloadTitle}</h2>
               <div className="space-y-4 mb-8">
                 <a
-                  href="https://apps.apple.com"
+                  href={appDownloadContent.iosAppStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-3 bg-black text-white rounded-lg px-6 py-4 hover:bg-gray-800 transition-colors cursor-pointer"
@@ -54,7 +42,7 @@ function AppDownload() {
                   </div>
                 </a>
                 <a
-                  href="https://play.google.com"
+                  href={appDownloadContent.androidPlayStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-3 bg-black text-white rounded-lg px-6 py-4 hover:bg-gray-800 transition-colors cursor-pointer"
@@ -69,14 +57,14 @@ function AppDownload() {
                 </a>
               </div>
               <div className="text-center">
-                <p className="text-[#666666] mb-4">或掃描二維碼下載</p>
+                <p className="text-[#666666] mb-4">{appDownloadContent.qrCodeDescription}</p>
                 <div className="flex justify-center gap-8">
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-white border-2 border-[#10B981] rounded-lg mb-2"></div>
+                    <img src={appDownloadContent.iosQRCode} alt="iOS QR Code" className="w-32 h-32 border-2 border-[#10B981] rounded-lg mb-2" />
                     <p className="text-sm text-[#666666]">iOS版本</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-white border-2 border-[#10B981] rounded-lg mb-2"></div>
+                    <img src={appDownloadContent.androidQRCode} alt="Android QR Code" className="w-32 h-32 border-2 border-[#10B981] rounded-lg mb-2" />
                     <p className="text-sm text-[#666666]">Android版本</p>
                   </div>
                 </div>
@@ -84,24 +72,22 @@ function AppDownload() {
             </div>
           </div>
           <div className="bg-[#ECF0F6] rounded-lg p-12">
-            <h2 className="text-3xl font-bold text-[#10B981] mb-8 text-center">系統要求</h2>
+            <h2 className="text-3xl font-bold text-[#10B981] mb-8 text-center">{appDownloadContent.systemRequirementsTitle}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-bold text-[#10B981] mb-4">iOS版本</h3>
+                <h3 className="text-xl font-bold text-[#10B981] mb-4">{appDownloadContent.iosTitle}</h3>
                 <ul className="space-y-2 text-[#666666]">
-                  <li>• 系統要求：iOS 13.0或更高版本</li>
-                  <li>• 兼容設備：iPhone、iPad、iPod touch</li>
-                  <li>• 應用大小：約85MB</li>
-                  <li>• 語言支持：繁體中文、英文</li>
+                  {appDownloadContent.iosRequirements.map((req, index) => (
+                    <li key={index}>• {req}</li>
+                  ))}
                 </ul>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-[#10B981] mb-4">Android版本</h3>
+                <h3 className="text-xl font-bold text-[#10B981] mb-4">{appDownloadContent.androidTitle}</h3>
                 <ul className="space-y-2 text-[#666666]">
-                  <li>• 系統要求：Android 8.0或更高版本</li>
-                  <li>• 兼容設備：支持大部分Android手機和平板</li>
-                  <li>• 應用大小：約90MB</li>
-                  <li>• 語言支持：繁體中文、英文</li>
+                  {appDownloadContent.androidRequirements.map((req, index) => (
+                    <li key={index}>• {req}</li>
+                  ))}
                 </ul>
               </div>
             </div>

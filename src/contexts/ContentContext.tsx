@@ -89,6 +89,42 @@ interface HomePageTexts {
   coreValuesSectionSubtitle: string;
   coreValuesSectionDescription: string;
 }
+interface AppDownloadContent {
+  pageTitle: string;
+  pageSubtitle: string;
+  featuresTitle: string;
+  features: string[];
+  downloadTitle: string;
+  iosAppStoreUrl: string;
+  androidPlayStoreUrl: string;
+  qrCodeDescription: string;
+  iosQRCode: string;
+  androidQRCode: string;
+  systemRequirementsTitle: string;
+  iosTitle: string;
+  iosRequirements: string[];
+  androidTitle: string;
+  androidRequirements: string[];
+}
+interface ContactPageContent {
+  pageTitle: string;
+  pageSubtitle: string;
+  contactMethodsTitle: string;
+  addressTitle: string;
+  address: string;
+  emailTitle: string;
+  email: string;
+  phoneTitle: string;
+  phone: string;
+  hoursTitle: string;
+  hours: string;
+  formTitle: string;
+  nameLabel: string;
+  emailLabel: string;
+  phoneLabel: string;
+  messageLabel: string;
+  submitButton: string;
+}
 interface ContentContextType {
   heroSlides: HeroSlide[];
   aboutCards: AboutCard[];
@@ -101,6 +137,8 @@ interface ContentContextType {
   companyCulture: CompanyCulture;
   siteSettings: SiteSettings;
   homePageTexts: HomePageTexts;
+  appDownloadContent: AppDownloadContent;
+  contactPageContent: ContactPageContent;
   updateHeroSlides: (slides: HeroSlide[]) => void;
   updateAboutCards: (cards: AboutCard[]) => void;
   updateCoreValues: (values: CoreValue[]) => void;
@@ -112,6 +150,8 @@ interface ContentContextType {
   updateCompanyCulture: (culture: CompanyCulture) => void;
   updateSiteSettings: (settings: SiteSettings) => void;
   updateHomePageTexts: (texts: HomePageTexts) => void;
+  updateAppDownloadContent: (content: AppDownloadContent) => void;
+  updateContactPageContent: (content: ContactPageContent) => void;
 }
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 const defaultHeroSlides: HeroSlide[] = [
@@ -206,7 +246,8 @@ const defaultTeamMembers: TeamMember[] = [
     positionEn: 'Founder',
     background: '姜云成先生长期从事产业协作与企业发展相关工作，具备跨区域、跨产业的实践经验。',
     focus: '新能源产业研究｜跨境产业协作｜项目推动与资源协调｜长期发展战略',
-    belief: '"尊重产业规律，顺应时代趋势，在长期主义中创造真实价值。"'
+    belief: '"尊重产业规律，顺应时代趋势，在长期主义中创造真实价值。"',
+    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=256&auto=format&fit=crop'
   }
 ];
 const defaultTeamCulture: TeamCultureItem[] = [
@@ -264,6 +305,58 @@ const defaultHomePageTexts: HomePageTexts = {
   coreValuesSectionSubtitle: 'Core Values',
   coreValuesSectionDescription: '在新能源产业与跨境合作的复杂环境中，我们以以下五大价值观，指引团队稳健前行'
 };
+const defaultAppDownloadContent: AppDownloadContent = {
+  pageTitle: 'App下載',
+  pageSubtitle: '隨時隨地掌握投資動態',
+  featuresTitle: '功能特色',
+  features: [
+    '實時查看投資組合和收益情況',
+    '接收重要通知和市場資訊',
+    '快速進行投資操作和資金劃轉',
+    '查閱詳細的投資報告',
+    '與專業顧問在線溝通'
+  ],
+  downloadTitle: '立即下載',
+  iosAppStoreUrl: 'https://apps.apple.com',
+  androidPlayStoreUrl: 'https://play.google.com',
+  qrCodeDescription: '或掃描二維碼下載',
+  iosQRCode: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://apps.apple.com',
+  androidQRCode: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://play.google.com',
+  systemRequirementsTitle: '系統要求',
+  iosTitle: 'iOS版本',
+  iosRequirements: [
+    '系統要求：iOS 13.0或更高版本',
+    '兼容設備：iPhone、iPad、iPod touch',
+    '應用大小：約85MB',
+    '語言支持：繁體中文、英文'
+  ],
+  androidTitle: 'Android版本',
+  androidRequirements: [
+    '系統要求：Android 8.0或更高版本',
+    '兼容設備：支持大部分Android手機和平板',
+    '應用大小：約90MB',
+    '語言支持：繁體中文、英文'
+  ]
+};
+const defaultContactPageContent: ContactPageContent = {
+  pageTitle: '聯繫我們',
+  pageSubtitle: '我們隨時為您提供專業服務',
+  contactMethodsTitle: '聯繫方式',
+  addressTitle: '公司地址',
+  address: '香港銅鑼灣希慎道33號',
+  emailTitle: '電子郵件',
+  email: 'team@hklingrui.com',
+  phoneTitle: '聯繫電話',
+  phone: '+852 1234 5678',
+  hoursTitle: '工作時間',
+  hours: '週一至週五 9:00 - 18:00',
+  formTitle: '發送消息',
+  nameLabel: '姓名',
+  emailLabel: '電子郵件',
+  phoneLabel: '電話',
+  messageLabel: '消息內容',
+  submitButton: '發送消息'
+};
 export function ContentProvider({ children }: { children: React.ReactNode }) {
   const [heroSlides, setHeroSlides] = useState<HeroSlide[]>(() => {
     const stored = localStorage.getItem('heroSlides');
@@ -309,6 +402,14 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     const stored = localStorage.getItem('homePageTexts');
     return stored ? JSON.parse(stored) : defaultHomePageTexts;
   });
+  const [appDownloadContent, setAppDownloadContent] = useState<AppDownloadContent>(() => {
+    const stored = localStorage.getItem('appDownloadContent');
+    return stored ? JSON.parse(stored) : defaultAppDownloadContent;
+  });
+  const [contactPageContent, setContactPageContent] = useState<ContactPageContent>(() => {
+    const stored = localStorage.getItem('contactPageContent');
+    return stored ? JSON.parse(stored) : defaultContactPageContent;
+  });
   useEffect(() => {
     localStorage.setItem('heroSlides', JSON.stringify(heroSlides));
   }, [heroSlides]);
@@ -342,6 +443,12 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     localStorage.setItem('homePageTexts', JSON.stringify(homePageTexts));
   }, [homePageTexts]);
+  useEffect(() => {
+    localStorage.setItem('appDownloadContent', JSON.stringify(appDownloadContent));
+  }, [appDownloadContent]);
+  useEffect(() => {
+    localStorage.setItem('contactPageContent', JSON.stringify(contactPageContent));
+  }, [contactPageContent]);
   return (
     <ContentContext.Provider
       value={{
@@ -356,6 +463,8 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
         companyCulture,
         siteSettings,
         homePageTexts,
+        appDownloadContent,
+        contactPageContent,
         updateHeroSlides: setHeroSlides,
         updateAboutCards: setAboutCards,
         updateCoreValues: setCoreValues,
@@ -367,6 +476,8 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
         updateCompanyCulture: setCompanyCulture,
         updateSiteSettings: setSiteSettings,
         updateHomePageTexts: setHomePageTexts,
+        updateAppDownloadContent: setAppDownloadContent,
+        updateContactPageContent: setContactPageContent,
       }}
     >
       {children}
