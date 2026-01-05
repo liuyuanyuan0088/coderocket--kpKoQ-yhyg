@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Lock, Shield } from 'lucide-react';
+import { siteConfig } from '../../config/site';
 function AdminLogin() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -73,7 +74,14 @@ function AdminLogin() {
           <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
             <p className="text-sm text-blue-800">
               <strong>控制台入口：</strong><br />
-              直接訪問 <code className="bg-white px-2 py-1 rounded">/admin/login</code>
+              <a 
+                href={siteConfig.adminUrl} 
+                className="text-blue-600 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {siteConfig.adminUrl}
+              </a>
             </p>
             <p className="text-xs text-blue-600 mt-2">
               默認密碼: <code className="bg-white px-2 py-1 rounded">admin123</code>
@@ -82,7 +90,7 @@ function AdminLogin() {
         </div>
         <div className="mt-6 text-center">
           <a
-            href="/"
+            href={siteConfig.url}
             className="text-[#10B981] hover:text-[#059669] transition-colors cursor-pointer text-sm font-medium"
           >
             ← 返回網站首頁

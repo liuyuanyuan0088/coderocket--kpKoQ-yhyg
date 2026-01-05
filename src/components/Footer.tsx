@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useContent } from '../contexts/ContentContext';
+import { siteConfig } from '../config/site';
 function Footer() {
   const { siteSettings } = useContent();
   return (
@@ -28,6 +29,9 @@ function Footer() {
             <div className="space-y-2 text-[#DEE1ED]">
               <p>地址：{siteSettings.contactAddress}</p>
               <p>聯繫方式：{siteSettings.contactEmail}</p>
+              <p className="text-sm mt-4">
+                網站：<a href={siteConfig.url} className="hover:text-white transition-colors">{siteConfig.domain}</a>
+              </p>
             </div>
           </div>
           <div>
@@ -52,6 +56,9 @@ function Footer() {
           </p>
           <p className="text-xs text-[#DEE1ED] mt-2">
             {siteSettings.footerCopyright}
+          </p>
+          <p className="text-xs text-[#DEE1ED] mt-2 opacity-70">
+            {siteConfig.domain}
           </p>
         </div>
       </div>
