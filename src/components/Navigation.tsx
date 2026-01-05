@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContent } from '../contexts/ContentContext';
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const { siteSettings } = useContent();
   const navItems = [
     { label: '网站首页', href: '/' },
     { label: '公司文化', href: '/company-culture' },
@@ -26,8 +28,8 @@ function Navigation() {
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3 cursor-pointer">
             <img
-              src="https://jojdwiugelqhcajbccxn.supabase.co/storage/v1/object/public/images/1767523138256-aee6773b-c9d1-411a-8a9c-e6ccb7969649-0.png"
-              alt="東盟新能資產管理有限公司"
+              src={siteSettings.logoUrl}
+              alt={siteSettings.companyName}
               className="h-16"
             />
           </Link>

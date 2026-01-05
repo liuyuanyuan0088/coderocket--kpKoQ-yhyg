@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+import { useContent } from '../contexts/ContentContext';
 function Footer() {
+  const { siteSettings } = useContent();
   return (
     <footer className="bg-[#424040] text-white py-12" id="contact">
       <div className="mx-auto px-4 max-w-[1200px]">
@@ -24,8 +26,8 @@ function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-4">聯繫我們</h3>
             <div className="space-y-2 text-[#DEE1ED]">
-              <p>地址：香港銅鑼灣希慎道33號</p>
-              <p>聯繫方式：team@hklingrui.com</p>
+              <p>地址：{siteSettings.contactAddress}</p>
+              <p>聯繫方式：{siteSettings.contactEmail}</p>
             </div>
           </div>
           <div>
@@ -40,27 +42,17 @@ function Footer() {
             </div>
             <div className="mt-4">
               <p className="text-sm text-[#DEE1ED] mb-1">上班時間</p>
-              <p className="text-sm text-[#DEE1ED]">周一到周五</p>
+              <p className="text-sm text-[#DEE1ED]">{siteSettings.workingHours}</p>
             </div>
           </div>
         </div>
-        <div className="border-t border-[#DEE1ED] border-opacity-20 pt-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-center md:text-left">
-              <p className="text-sm text-[#DEE1ED]">
-                東盟新能資產管理有限公司 ©All Rights reserved
-              </p>
-              <p className="text-xs text-[#DEE1ED] mt-2">
-                未經許可不得複製、轉載或摘編，違者必究！
-              </p>
-            </div>
-            <Link 
-              to="/admin/login"
-              className="text-xs text-[#DEE1ED] hover:text-white transition-colors cursor-pointer opacity-50 hover:opacity-100"
-            >
-              🔐 管理員登入
-            </Link>
-          </div>
+        <div className="border-t border-[#DEE1ED] border-opacity-20 pt-6 text-center">
+          <p className="text-sm text-[#DEE1ED]">
+            {siteSettings.footerText} ©All Rights reserved
+          </p>
+          <p className="text-xs text-[#DEE1ED] mt-2">
+            {siteSettings.footerCopyright}
+          </p>
         </div>
       </div>
     </footer>
