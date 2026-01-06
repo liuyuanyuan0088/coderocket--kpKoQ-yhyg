@@ -1,22 +1,41 @@
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { useContent } from '../contexts/ContentContext';
+import { useEffect, useState } from 'react';
+interface ContactPageData {
+  title: string;
+  description: string;
+  contactMethodsTitle: string;
+  addressLabel: string;
+  addressContent: string;
+  emailLabel: string;
+  emailAddress: string;
+  phoneLabel: string;
+  phoneNumber: string;
+  hoursLabel: string;
+  workingHours: string;
+  formTitle: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  emailPlaceholder: string;
+  phonePlaceholder: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  submitButton: string;
+}
 function Contact() {
-  const content = useContent();
-  // 使用可选链和默认值确保类型安全
-  const contactData = (content as any).contactPage || {
+  const [contactData, setContactData] = useState<ContactPageData>({
     title: '聯繫我們',
     description: '我們隨時為您提供專業服務',
     contactMethodsTitle: '聯繫方式',
-    formTitle: '發送消息',
     addressLabel: '公司地址',
-    addressContent: '香港銅鑼灣希慎道33號',
+    addressContent: '香港中环金融街8号国际金融中心1期39楼',
     emailLabel: '電子郵件',
-    emailAddress: 'team@hklingrui.com',
+    emailAddress: 'asean-newenergy.com',
     phoneLabel: '聯繫電話',
-    phoneNumber: '+852 1234 5678',
+    phoneNumber: '+852 47485997',
     hoursLabel: '工作時間',
     workingHours: '週一至週五 9:00 - 18:00',
+    formTitle: '發送消息',
     nameLabel: '姓名',
     namePlaceholder: '請輸入您的姓名',
     emailPlaceholder: '請輸入您的郵箱',
@@ -24,7 +43,32 @@ function Contact() {
     messageLabel: '消息內容',
     messagePlaceholder: '請輸入您想諮詢的內容',
     submitButton: '發送消息',
-  };
+  });
+  useEffect(() => {
+    // 从 localStorage 读取保存的联系页面数据
+    const savedData = localStorage.getItem('contactPage');
+    if (savedData) {
+      try {
+        const parsed = JSON.parse(savedData);
+        setContactData(prev => ({ ...prev, ...parsed }));
+      } catch (error) {
+        console.error('Failed to parse contact page data:', error);
+      }
+    }
+    // 监听 storage 事件，当其他标签页更新数据时同步
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'contactPage' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          setContactData(prev => ({ ...prev, ...parsed }));
+        } catch (error) {
+          console.error('Failed to parse contact page data:', error);
+        }
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
