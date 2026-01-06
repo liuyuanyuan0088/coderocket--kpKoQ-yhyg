@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [slides, setSlides] = useState([
+  const slides = [
     {
       image: 'https://hklingrui.com/static/upload/image/20251024/1761314468397066.jpg',
       title: '專業資產管理',
@@ -18,36 +19,7 @@ function Hero() {
       title: '東盟市場專家',
       subtitle: '深耕區域市場，創造長期價值'
     }
-  ]);
-  useEffect(() => {
-    // 从 localStorage 读取轮播图数据
-    const savedSlides = localStorage.getItem('heroSlides');
-    if (savedSlides) {
-      try {
-        const parsed = JSON.parse(savedSlides);
-        if (parsed && parsed.length > 0) {
-          setSlides(parsed);
-        }
-      } catch (error) {
-        console.error('Failed to parse hero slides:', error);
-      }
-    }
-    // 监听 storage 事件
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'heroSlides' && e.newValue) {
-        try {
-          const parsed = JSON.parse(e.newValue);
-          if (parsed && parsed.length > 0) {
-            setSlides(parsed);
-          }
-        } catch (error) {
-          console.error('Failed to parse hero slides:', error);
-        }
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  ];
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -59,12 +31,6 @@ function Hero() {
   };
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
   };
   return (
     <div className="relative h-[600px] overflow-hidden mt-20">
@@ -85,19 +51,19 @@ function Hero() {
               <div className="text-center text-white px-4">
                 <h1 className="text-5xl md:text-6xl font-bold mb-4">{slide.title}</h1>
                 <p className="text-xl md:text-2xl mb-8">{slide.subtitle}</p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button
-                    onClick={() => scrollToSection('about')}
+                <div className="flex gap-4 justify-center">
+                  <Link
+                    to="/about"
                     className="bg-white text-[#34478F] px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors cursor-pointer"
                   >
                     了解更多
-                  </button>
-                  <button
-                    onClick={() => window.location.href = '/contact'}
-                    className="bg-[#34478F] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#2a3670] transition-colors cursor-pointer"
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="bg-[#34478F] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#2a3670] transition-colors cursor-pointer border-2 border-white"
                   >
                     聯繫我們
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

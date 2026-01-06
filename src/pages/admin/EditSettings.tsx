@@ -2,130 +2,195 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 export default function EditSettings() {
   const [settings, setSettings] = useState({
-    companyName: '東盟新能資產管理有限公司',
-    tagline: '專注於東盟地區新能源資產投資管理',
-    address: '香港中环金融街8号国际金融中心1期39楼',
-    email: 'asean-newenergy.com',
-    phone: '+852 47485997',
-    workingHours: '週一至週五 9:00 - 18:00',
-    customerServiceText: '客服',
-    copyright: '東盟新能資產管理有限公司 ©All Rights reserved',
-    rightsReserved: '未經許可不得複製、轉載或摘編，違者必究！'
+    siteName: '東盟新能資產管理有限公司',
+    siteDescription: '專注於東盟地區新能源資產投資管理',
+    contactEmail: 'team@hklingrui.com',
+    contactPhone: '+852 1234 5678',
+    address: '香港銅鑼灣希慎道33號',
+    customerService: {
+      icon: 'https://hklingrui.com/pc/images/qq.png',
+      label: '客服',
+      link: '',
+      workingHoursLabel: '上班時間',
+      workingHours: '週一到週五'
+    }
   });
+  const [saved, setSaved] = useState(false);
   useEffect(() => {
-    const saved = localStorage.getItem('settings');
-    if (saved) {
+    const savedSettings = localStorage.getItem('settings');
+    if (savedSettings) {
       try {
-        setSettings(JSON.parse(saved));
+        const parsed = JSON.parse(savedSettings);
+        setSettings(prev => ({ ...prev, ...parsed }));
       } catch (error) {
-        console.error('Failed to load settings:', error);
+        console.error('Failed to parse settings:', error);
       }
     }
   }, []);
   const handleSave = () => {
     localStorage.setItem('settings', JSON.stringify(settings));
-    alert('設置已保存！');
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
   };
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="mx-auto px-4 max-w-4xl">
-        <div className="mb-6">
-          <Link
-            to="/admin/dashboard"
-            className="text-blue-600 hover:text-blue-800 flex items-center gap-2 cursor-pointer"
-          >
-            ← 返回控制台
-          </Link>
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-white shadow-sm border-b border-gray-200">
+        <div className="mx-auto px-6 py-4 max-w-4xl">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold text-gray-900">網站基本設置</h1>
+            <Link
+              to="/admin/dashboard"
+              className="text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
+            >
+              ← 返回控制台
+            </Link>
+          </div>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold mb-6">網站基本設置</h1>
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium mb-2">公司名稱</label>
-              <input
-                type="text"
-                value={settings.companyName}
-                onChange={(e) => setSettings({ ...settings, companyName: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
+      </div>
+      <div className="mx-auto px-6 py-8 max-w-4xl">
+        <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              網站名稱
+            </label>
+            <input
+              type="text"
+              value={settings.siteName}
+              onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              網站描述
+            </label>
+            <textarea
+              value={settings.siteDescription}
+              onChange={(e) => setSettings({ ...settings, siteDescription: e.target.value })}
+              rows={3}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              聯繫郵箱
+            </label>
+            <input
+              type="email"
+              value={settings.contactEmail}
+              onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              聯繫電話
+            </label>
+            <input
+              type="tel"
+              value={settings.contactPhone}
+              onChange={(e) => setSettings({ ...settings, contactPhone: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              公司地址
+            </label>
+            <input
+              type="text"
+              value={settings.address}
+              onChange={(e) => setSettings({ ...settings, address: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div className="border-t border-gray-200 pt-6 mt-6">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">在線客服設置</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  客服圖標URL
+                </label>
+                <input
+                  type="text"
+                  value={settings.customerService.icon}
+                  onChange={(e) => setSettings({
+                    ...settings,
+                    customerService: { ...settings.customerService, icon: e.target.value }
+                  })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="https://example.com/icon.png"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  客服標籤
+                </label>
+                <input
+                  type="text"
+                  value={settings.customerService.label}
+                  onChange={(e) => setSettings({
+                    ...settings,
+                    customerService: { ...settings.customerService, label: e.target.value }
+                  })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="客服"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  客服鏈接（選填，留空則不可點擊）
+                </label>
+                <input
+                  type="text"
+                  value={settings.customerService.link}
+                  onChange={(e) => setSettings({
+                    ...settings,
+                    customerService: { ...settings.customerService, link: e.target.value }
+                  })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="https://wa.me/85212345678 或 QQ客服鏈接"
+                />
+                <p className="mt-1 text-sm text-gray-500">
+                  示例：WhatsApp: https://wa.me/85212345678 | QQ: tencent://message/?uin=123456
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  工作時間標籤
+                </label>
+                <input
+                  type="text"
+                  value={settings.customerService.workingHoursLabel}
+                  onChange={(e) => setSettings({
+                    ...settings,
+                    customerService: { ...settings.customerService, workingHoursLabel: e.target.value }
+                  })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  工作時間
+                </label>
+                <input
+                  type="text"
+                  value={settings.customerService.workingHours}
+                  onChange={(e) => setSettings({
+                    ...settings,
+                    customerService: { ...settings.customerService, workingHours: e.target.value }
+                  })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">標語</label>
-              <input
-                type="text"
-                value={settings.tagline}
-                onChange={(e) => setSettings({ ...settings, tagline: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">公司地址</label>
-              <input
-                type="text"
-                value={settings.address}
-                onChange={(e) => setSettings({ ...settings, address: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">電子郵件</label>
-              <input
-                type="email"
-                value={settings.email}
-                onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">聯繫電話</label>
-              <input
-                type="tel"
-                value={settings.phone}
-                onChange={(e) => setSettings({ ...settings, phone: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">工作時間</label>
-              <input
-                type="text"
-                value={settings.workingHours}
-                onChange={(e) => setSettings({ ...settings, workingHours: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">客服文字</label>
-              <input
-                type="text"
-                value={settings.customerServiceText}
-                onChange={(e) => setSettings({ ...settings, customerServiceText: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">版權聲明</label>
-              <input
-                type="text"
-                value={settings.copyright}
-                onChange={(e) => setSettings({ ...settings, copyright: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">權利保留聲明</label>
-              <input
-                type="text"
-                value={settings.rightsReserved}
-                onChange={(e) => setSettings({ ...settings, rightsReserved: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div>
+          </div>
+          <div className="flex justify-end pt-4">
             <button
               onClick={handleSave}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
             >
-              保存更改
+              {saved ? '✓ 已保存' : '保存更改'}
             </button>
           </div>
         </div>

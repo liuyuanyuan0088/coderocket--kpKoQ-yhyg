@@ -1,95 +1,26 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-interface AboutCard {
-  title: string;
-  image: string;
-  description: string;
-  link: string;
-}
+import { useContent } from '../contexts/ContentContext';
 function About() {
-  const [title, setTitle] = useState('凌瑞團隊');
-  const [subtitle, setSubtitle] = useState('以凌雲之志謀未來，以瑞氣盈門築財富');
-  const [cards, setCards] = useState<AboutCard[]>([
-    {
-      title: '公司文化',
-      image: 'https://picsum.photos/id/10/400/300',
-      description: '秉持專業、創新、穩健的經營理念',
-      link: '/company-culture'
-    },
-    {
-      title: '服務與解決方案',
-      image: 'https://picsum.photos/id/20/400/300',
-      description: '提供全方位資產管理與投資顧問服務',
-      link: '/services'
-    },
-    {
-      title: '關於我們',
-      image: 'https://picsum.photos/id/30/400/300',
-      description: '專注於東盟地區新能源資產投資管理',
-      link: '/about'
-    }
-  ]);
-  useEffect(() => {
-    // 读取标题
-    const savedContent = localStorage.getItem('homePageContent');
-    if (savedContent) {
-      try {
-        const parsed = JSON.parse(savedContent);
-        if (parsed.aboutTitle) setTitle(parsed.aboutTitle);
-        if (parsed.aboutSubtitle) setSubtitle(parsed.aboutSubtitle);
-      } catch (error) {
-        console.error('Failed to parse home page content:', error);
-      }
-    }
-    // 读取卡片
-    const savedCards = localStorage.getItem('aboutCards');
-    if (savedCards) {
-      try {
-        const parsed = JSON.parse(savedCards);
-        if (parsed && parsed.length > 0) {
-          setCards(parsed);
-        }
-      } catch (error) {
-        console.error('Failed to parse about cards:', error);
-      }
-    }
-    // 监听 storage 事件
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'homePageContent' && e.newValue) {
-        try {
-          const parsed = JSON.parse(e.newValue);
-          if (parsed.aboutTitle) setTitle(parsed.aboutTitle);
-          if (parsed.aboutSubtitle) setSubtitle(parsed.aboutSubtitle);
-        } catch (error) {
-          console.error('Failed to parse home page content:', error);
-        }
-      }
-      if (e.key === 'aboutCards' && e.newValue) {
-        try {
-          const parsed = JSON.parse(e.newValue);
-          if (parsed && parsed.length > 0) {
-            setCards(parsed);
-          }
-        } catch (error) {
-          console.error('Failed to parse about cards:', error);
-        }
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  const { aboutCards, homePageTexts } = useContent();
   return (
     <section className="py-20 bg-[#F5F5F5]" id="about">
       <div className="mx-auto px-4 max-w-[1200px]">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-[#34478F] mb-4">{title}</h2>
-          <p className="text-lg text-[#5A5A5A]">{subtitle}</p>
+          <h2 className="text-4xl font-bold text-[#10B981] mb-4">{homePageTexts.aboutSectionTitle}</h2>
+          <p className="text-lg text-[#5A5A5A] mb-3">{homePageTexts.aboutSectionSubtitle}</p>
+          <p className="text-base text-[#666666]">
+            {homePageTexts.aboutSectionDescription}
+          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {cards.map((card, index) => (
+          {aboutCards.map((card, index) => (
             <Link
               key={index}
-              to={card.link}
+              to={
+                card.title === '公司文化' ? '/company-culture' :
+                card.title === '服務與解決方案' ? '/services' :
+                card.title === '關於我們' ? '/about' : '/'
+              }
               className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer"
             >
               <div className="relative h-48 overflow-hidden">
@@ -100,7 +31,7 @@ function About() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-[#34478F] mb-2">{card.title}</h3>
+                <h3 className="text-xl font-bold text-[#10B981] mb-2">{card.title}</h3>
                 <p className="text-[#666666]">{card.description}</p>
               </div>
             </Link>
@@ -109,7 +40,7 @@ function About() {
             to="/app-download"
             className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer"
           >
-            <div className="relative h-48 bg-gradient-to-br from-[#34478F] to-[#5B6FB5] flex items-center justify-center">
+            <div className="relative h-48 bg-gradient-to-br from-[#10B981] to-[#059669] flex items-center justify-center">
               <div className="text-center text-white">
                 <svg
                   className="mx-auto mb-3 h-16 w-16"
@@ -122,7 +53,7 @@ function About() {
               </div>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold text-[#34478F] mb-2">App下載</h3>
+              <h3 className="text-xl font-bold text-[#10B981] mb-2">App下載</h3>
               <p className="text-[#666666]">隨時隨地掌握投資動態</p>
             </div>
           </Link>
