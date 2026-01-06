@@ -3,6 +3,7 @@ export const siteConfig = {
   description: '專注於東盟地區新能源資產投資管理',
   url: 'https://asean-newenergy.com',
   domain: 'asean-newenergy.com',
+  adminUrl: 'https://asean-newenergy.com/admin',
   ogImage: 'https://asean-newenergy.com/og-image.png',
   links: {
     twitter: 'https://twitter.com',
