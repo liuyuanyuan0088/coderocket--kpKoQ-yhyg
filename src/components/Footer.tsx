@@ -4,7 +4,7 @@ function Footer() {
   const [customerService, setCustomerService] = useState({
     icon: 'https://hklingrui.com/pc/images/qq.png',
     label: '客服',
-    link: '#',
+    link: '',
     workingHoursLabel: '上班時間',
     workingHours: '週一到週五'
   });
@@ -67,7 +67,7 @@ function Footer() {
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">在線客服</h3>
-            {customerService.link && customerService.link !== '#' ? (
+            {customerService.link && customerService.link !== '' ? (
               <a 
                 href={customerService.link}
                 target="_blank"
