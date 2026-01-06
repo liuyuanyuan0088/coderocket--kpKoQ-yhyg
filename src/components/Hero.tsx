@@ -1,16 +1,53 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useContent } from '../contexts/ContentContext';
 function Hero() {
-  const { heroSlides } = useContent();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = heroSlides.length > 0 ? heroSlides : [
+  const [slides, setSlides] = useState([
     {
-      image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop',
-      title: '綠色能源 · 美好未來',
-      subtitle: '投資可持續發展，共創綠色未來'
+      image: 'https://hklingrui.com/static/upload/image/20251024/1761314468397066.jpg',
+      title: '專業資產管理',
+      subtitle: '以創新思維打造穩健投資組合'
+    },
+    {
+      image: 'https://hklingrui.com/static/upload/image/20251024/1761314481945270.jpg',
+      title: '新能源投資領先者',
+      subtitle: '把握綠色經濟發展機遇'
+    },
+    {
+      image: 'https://hklingrui.com/static/upload/image/20251024/1761318501603440.jpg',
+      title: '東盟市場專家',
+      subtitle: '深耕區域市場，創造長期價值'
     }
-  ];
+  ]);
+  useEffect(() => {
+    // 从 localStorage 读取轮播图数据
+    const savedSlides = localStorage.getItem('heroSlides');
+    if (savedSlides) {
+      try {
+        const parsed = JSON.parse(savedSlides);
+        if (parsed && parsed.length > 0) {
+          setSlides(parsed);
+        }
+      } catch (error) {
+        console.error('Failed to parse hero slides:', error);
+      }
+    }
+    // 监听 storage 事件
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'heroSlides' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          if (parsed && parsed.length > 0) {
+            setSlides(parsed);
+          }
+        } catch (error) {
+          console.error('Failed to parse hero slides:', error);
+        }
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -22,6 +59,12 @@ function Hero() {
   };
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
   return (
     <div className="relative h-[600px] overflow-hidden mt-20">
@@ -38,23 +81,23 @@ function Hero() {
               alt={slide.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent flex items-center">
-              <div className="mx-auto px-4 max-w-[1200px] w-full">
-                <div className="max-w-2xl">
-                  <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg">
-                    {slide.title}
-                  </h1>
-                  <p className="text-xl md:text-2xl text-white drop-shadow-md mb-8">
-                    {slide.subtitle}
-                  </p>
-                  <div className="flex gap-4">
-                    <button className="bg-[#10B981] hover:bg-[#059669] text-white px-8 py-3 rounded-lg font-bold transition-colors cursor-pointer shadow-lg">
-                      了解更多
-                    </button>
-                    <button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-2 border-white px-8 py-3 rounded-lg font-bold transition-colors cursor-pointer shadow-lg">
-                      聯繫我們
-                    </button>
-                  </div>
+            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+              <div className="text-center text-white px-4">
+                <h1 className="text-5xl md:text-6xl font-bold mb-4">{slide.title}</h1>
+                <p className="text-xl md:text-2xl mb-8">{slide.subtitle}</p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button
+                    onClick={() => scrollToSection('about')}
+                    className="bg-white text-[#34478F] px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors cursor-pointer"
+                  >
+                    了解更多
+                  </button>
+                  <button
+                    onClick={() => window.location.href = '/contact'}
+                    className="bg-[#34478F] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#2a3670] transition-colors cursor-pointer"
+                  >
+                    聯繫我們
+                  </button>
                 </div>
               </div>
             </div>
@@ -63,30 +106,27 @@ function Hero() {
       ))}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-3 transition-all cursor-pointer shadow-lg"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-3 transition-all cursor-pointer"
       >
-        <ChevronLeft className="h-6 w-6 text-[#10B981]" />
+        <ChevronLeft className="h-6 w-6 text-[#34478F]" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-3 transition-all cursor-pointer shadow-lg"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-3 transition-all cursor-pointer"
       >
-        <ChevronRight className="h-6 w-6 text-[#10B981]" />
+        <ChevronRight className="h-6 w-6 text-[#34478F]" />
       </button>
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`h-2 rounded-full transition-all cursor-pointer ${
-              index === currentSlide 
-                ? 'bg-[#10B981] w-12' 
-                : 'bg-white/60 w-8 hover:bg-white/80'
+            className={`w-12 h-1 rounded-full transition-all cursor-pointer ${
+              index === currentSlide ? 'bg-white' : 'bg-white bg-opacity-50'
             }`}
           />
         ))}
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
     </div>
   );
 }
