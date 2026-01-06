@@ -1,95 +1,123 @@
 # 域名配置指南
-## 📋 域名信息
- - 主DNS: a.share-dns.com
- - 辅助DNS: b.share-dns.net
-## 🔧 配置步骤
-### 第一步：更新域名的DNS服务器
-1. 登录你的域名注册商控制台（购买域名的网站）
-2. 找到域名 `asean-newenergy.com` 的管理页面
-3. 进入DNS管理或名称服务器设置
-4. 将DNS服务器修改为：
-  ```
-  a.share-dns.com
-  b.share-dns.net
-  ```
-5. 保存设置
-### 第二步：配置DNS解析记录
-登录DNS服务商控制台（a.share-dns.com），添加以下记录：
-#### A记录配置（指向服务器IP）
-```
-记录类型: A
-主机记录: @
-记录值: [需要CodeRocket提供的服务器IP地址]
-TTL: 600
-```
-#### CNAME记录配置（www子域名）
-```
-记录类型: CNAME
-主机记录: www
-记录值: assetmanagement.coderocket.app
-TTL: 600
-```
-#### 可选：CNAME记录配置（根域名）
-如果DNS服务商支持根域名CNAME：
-```
-记录类型: CNAME
-主机记录: @
-记录值: assetmanagement.coderocket.app
-TTL: 600
-```
-### 第三步：等待DNS生效
-### 第四步：验证配置
-使用以下命令检查DNS是否生效：
+## ✅ 当前配置
+**主域名**: `asean-newenergy.com`
+## 🌐 DNS 配置
+确保你的域名 DNS 记录已正确配置：
+### Vercel 部署（推荐）
+在 Vercel Dashboard 中添加自定义域名：
+1. **登录 Vercel Dashboard**
+   ```
+   https://vercel.com/dashboard
+   ```
+2. **进入项目设置**
+   - 选择你的项目
+   - 点击 "Settings"
+   - 点击 "Domains"
+3. **添加域名**
+   - 点击 "Add Domain"
+   - 输入：`asean-newenergy.com`
+   - 输入：`www.asean-newenergy.com`（可选）
+   - 点击 "Add"
+4. **配置 DNS**
+   Vercel 会提供两种配置方式：
+   **方式一：使用 A 记录（推荐）**
+   ```
+   类型    名称    值
+   A       @       76.76.21.21
+   CNAME   www     cname.vercel-dns.com
+   ```
+   **方式二：使用 CNAME（适用于子域名）**
+   ```
+   类型    名称    值
+   CNAME   www     cname.vercel-dns.com
+   ```
+5. **等待 DNS 生效**
+   - 通常需要 5-60 分钟
+   - 可能需要最多 48 小时完全生效
+6. **验证配置**
+   - Vercel 会自动验证 DNS 配置
+   - 配置正确后会显示绿色勾号
+   - SSL 证书会自动配置
+## 🔒 SSL/HTTPS
+Vercel 会自动为你的域名配置免费的 SSL 证书：
+## 📊 域名状态检查
+使用以下工具检查域名配置：
 ```bash
-# Windows/Mac/Linux
+# 检查 DNS 记录
 nslookup asean-newenergy.com
-# 详细查询
-dig asean-newenergy.com
-# 检查www子域名
-nslookup www.asean-newenergy.com
+# 检查 DNS 传播状态
+https://www.whatsmydns.net/#A/asean-newenergy.com
+# 检查 SSL 证书
+https://www.ssllabs.com/ssltest/analyze.html?d=asean-newenergy.com
 ```
-## ✅ 配置成功后
-当DNS生效后，你可以通过以下地址访问网站：
-## ⚠️ 注意事项
-1. **DNS服务器更新时间**
-  - 更新DNS服务器后，可能需要24-48小时全球生效
-  - 建议提前配置，避免影响网站访问
-2. **HTTPS证书**
-  - 域名生效后，需要配置SSL证书
-  - CodeRocket平台可能会自动配置Let's Encrypt免费证书
-  - 如需自定义证书，请联系技术支持
-3. **备用访问地址**
-  - 在自定义域名配置期间，可以继续使用：
-  - https://assetmanagement.coderocket.app
-4. **DNS记录优先级**
-  - A记录优先级高于CNAME记录
-  - 建议使用A记录配置根域名(@)
-  - 使用CNAME记录配置子域名(www)
-## 🔍 常见问题
-### Q: DNS已经配置但网站无法访问？
-A: 请检查：
-1. DNS记录是否正确配置
-2. 等待DNS全球生效（可能需要24-48小时）
-3. 清除本地DNS缓存：
-  ```bash
-  # Windows
-  ipconfig /flushdns
-  # Mac
-  sudo dscacheutil -flushcache
-  # Linux
-  sudo systemd-resolve --flush-caches
+## 🎯 访问地址
+配置完成后，你的网站将可以通过以下地址访问：
+## 🔄 重定向配置
+确保 `vercel.json` 包含以下配置：
+```json
+{
+ "redirects": [
+   {
+     "source": "/:path((?!admin).*)*",
+     "has": [
+       {
+         "type": "host",
+         "value": "www.asean-newenergy.com"
+       }
+     ],
+     "destination": "https://asean-newenergy.com/:path*",
+     "permanent": true
+   }
+ ]
+}
+```
+这会将 www 自动重定向到主域名。
+## ⚠️ 常见问题
+### Q1: DNS 配置后网站无法访问？
+**解决方案：**
+1. 检查 DNS 记录是否正确
+2. 等待 DNS 传播（最多 48 小时）
+3. 清除浏览器缓存
+4. 使用无痕模式测试
+### Q2: 显示 "域名未验证"？
+**解决方案：**
+1. 确认 DNS 记录已添加
+2. 等待 5-10 分钟
+3. 在 Vercel Dashboard 点击 "Verify"
+### Q3: HTTPS 不可用？
+**解决方案：**
+1. 等待 SSL 证书自动配置（通常 5-10 分钟）
+2. 检查 DNS 是否正确解析
+3. 在 Vercel Dashboard 检查 SSL 状态
+### Q4: 从旧域名迁移？
+**解决方案：**
+1. 在 Vercel 添加新域名
+2. 保留旧域名一段时间
+3. 使用 301 重定向从旧域名到新域名
+4. 更新所有外部链接
+## 📝 更新清单
+域名更改后需要更新：
+## 🎉 完成！
+域名配置完成后：
+1. **测试访问**
   ```
-### Q: 如何获取CodeRocket服务器的IP地址？
-A: 使用以下命令查询备用域名的IP：
-```bash
-nslookup assetmanagement.coderocket.app
-```
-然后将该IP配置到A记录中。
-### Q: 配置完成后网站显示"不安全"？
-A: 这是因为HTTPS证书尚未配置，请：
-1. 等待Let's Encrypt自动配置（通常24小时内完成）
-2. 或联系CodeRocket技术支持手动配置SSL证书
-## 📞 需要帮助？
-如果遇到配置问题，请联系：
-**更新日期**: 2024
-**文档版本**: 1.0
+  https://asean-newenergy.com
+  ```
+2. **测试管理后台**
+  ```
+  https://asean-newenergy.com/admin/login
+  ```
+3. **测试所有页面**
+  - 首页
+  - 公司文化
+  - 服务
+  - 关于我们
+  - 新闻中心
+  - 联系我们
+  - App下载
+4. **检查移动端**
+  - 响应式设计
+  - 触摸交互
+  - 页面加载速度
+需要帮助？查看 Vercel 官方文档：
+https://vercel.com/docs/concepts/projects/domains
