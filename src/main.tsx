@@ -17,6 +17,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
 import EditSettings from "./pages/admin/EditSettings.tsx";
 import EditHomePage from "./pages/admin/EditHomePage.tsx";
 import EditHero from "./pages/admin/EditHero.tsx";
+import EditFooter from "./pages/admin/EditFooter.tsx";
 import EditAboutCards from "./pages/admin/EditAboutCards.tsx";
 import EditCulture from "./pages/admin/EditCulture.tsx";
 import EditValues from "./pages/admin/EditValues.tsx";
@@ -125,6 +126,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               element={
                 <ProtectedRoute>
                   <EditHero />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/footer"
+              element={
+                <ProtectedRoute>
+                  <EditFooter />
                 </ProtectedRoute>
               }
             />

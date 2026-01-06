@@ -1,200 +1,174 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-export default function EditSettings() {
-  const [settings, setSettings] = useState({
-    siteName: '東盟新能資產管理有限公司',
-    siteDescription: '專注於東盟地區新能源資產投資管理',
-    contactEmail: 'team@hklingrui.com',
-    contactPhone: '+852 1234 5678',
-    address: '香港銅鑼灣希慎道33號',
-    customerService: {
-      icon: 'https://hklingrui.com/pc/images/qq.png',
-      label: '客服',
-      link: '',
-      workingHoursLabel: '上班時間',
-      workingHours: '週一到週五'
-    }
-  });
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useContent } from '../../contexts/ContentContext';
+import { ArrowLeft, Save, Upload } from 'lucide-react';
+function EditSettings() {
+  const navigate = useNavigate();
+  const { siteSettings, updateSiteSettings } = useContent();
+  const [settings, setSettings] = useState(siteSettings);
   const [saved, setSaved] = useState(false);
-  useEffect(() => {
-    const savedSettings = localStorage.getItem('settings');
-    if (savedSettings) {
-      try {
-        const parsed = JSON.parse(savedSettings);
-        setSettings(prev => ({ ...prev, ...parsed }));
-      } catch (error) {
-        console.error('Failed to parse settings:', error);
-      }
-    }
-  }, []);
+  const handleChange = (field: string, value: string) => {
+    setSettings({ ...settings, [field]: value });
+  };
   const handleSave = () => {
-    localStorage.setItem('settings', JSON.stringify(settings));
+    updateSiteSettings(settings);
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   };
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="mx-auto px-6 py-4 max-w-4xl">
+    <div className="min-h-screen bg-gray-100">
+      <div className="bg-white shadow-md">
+        <div className="mx-auto px-4 max-w-[1200px] py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">網站基本設置</h1>
-            <Link
-              to="/admin/dashboard"
-              className="text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
+            <button
+              onClick={() => navigate('/admin')}
+              className="flex items-center gap-2 text-gray-600 hover:text-[#10B981] transition-colors cursor-pointer"
             >
-              ← 返回控制台
-            </Link>
+              <ArrowLeft className="h-5 w-5" />
+              <span>返回控制台</span>
+            </button>
+            <button
+              onClick={handleSave}
+              className="flex items-center gap-2 px-6 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg transition-colors cursor-pointer"
+            >
+              <Save className="h-5 w-5" />
+              <span>保存更改</span>
+            </button>
           </div>
         </div>
       </div>
-      <div className="mx-auto px-6 py-8 max-w-4xl">
-        <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              網站名稱
-            </label>
-            <input
-              type="text"
-              value={settings.siteName}
-              onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+      <div className="mx-auto px-4 max-w-[1200px] py-12">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">網站設置</h1>
+          <p className="text-gray-600">編輯網站基本信息和聯繫方式</p>
+        </div>
+        {saved && (
+          <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+            ✓ 更改已保存成功！刷新頁面即可看到更新
           </div>
+        )}
+        <div className="bg-white rounded-lg shadow-md p-8 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              網站描述
-            </label>
-            <textarea
-              value={settings.siteDescription}
-              onChange={(e) => setSettings({ ...settings, siteDescription: e.target.value })}
-              rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              聯繫郵箱
-            </label>
-            <input
-              type="email"
-              value={settings.contactEmail}
-              onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              聯繫電話
-            </label>
-            <input
-              type="tel"
-              value={settings.contactPhone}
-              onChange={(e) => setSettings({ ...settings, contactPhone: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              公司地址
-            </label>
-            <input
-              type="text"
-              value={settings.address}
-              onChange={(e) => setSettings({ ...settings, address: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-          <div className="border-t border-gray-200 pt-6 mt-6">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">在線客服設置</h2>
-            <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">公司信息</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  客服圖標URL
-                </label>
+                <label className="block text-gray-700 font-medium mb-2">公司名稱（中文）</label>
                 <input
                   type="text"
-                  value={settings.customerService.icon}
-                  onChange={(e) => setSettings({
-                    ...settings,
-                    customerService: { ...settings.customerService, icon: e.target.value }
-                  })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="https://example.com/icon.png"
+                  value={settings.companyName}
+                  onChange={(e) => handleChange('companyName', e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  客服標籤
-                </label>
+                <label className="block text-gray-700 font-medium mb-2">公司名稱（英文）</label>
                 <input
                   type="text"
-                  value={settings.customerService.label}
-                  onChange={(e) => setSettings({
-                    ...settings,
-                    customerService: { ...settings.customerService, label: e.target.value }
-                  })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="客服"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  客服鏈接（選填，留空則不可點擊）
-                </label>
-                <input
-                  type="text"
-                  value={settings.customerService.link}
-                  onChange={(e) => setSettings({
-                    ...settings,
-                    customerService: { ...settings.customerService, link: e.target.value }
-                  })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="https://wa.me/85212345678 或 QQ客服鏈接"
-                />
-                <p className="mt-1 text-sm text-gray-500">
-                  示例：WhatsApp: https://wa.me/85212345678 | QQ: tencent://message/?uin=123456
-                </p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  工作時間標籤
-                </label>
-                <input
-                  type="text"
-                  value={settings.customerService.workingHoursLabel}
-                  onChange={(e) => setSettings({
-                    ...settings,
-                    customerService: { ...settings.customerService, workingHoursLabel: e.target.value }
-                  })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  工作時間
-                </label>
-                <input
-                  type="text"
-                  value={settings.customerService.workingHours}
-                  onChange={(e) => setSettings({
-                    ...settings,
-                    customerService: { ...settings.customerService, workingHours: e.target.value }
-                  })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={settings.companyNameEn}
+                  onChange={(e) => handleChange('companyNameEn', e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none"
                 />
               </div>
             </div>
           </div>
-          <div className="flex justify-end pt-4">
-            <button
-              onClick={handleSave}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
-            >
-              {saved ? '✓ 已保存' : '保存更改'}
-            </button>
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Logo URL</label>
+            <div className="flex gap-4">
+              <input
+                type="text"
+                value={settings.logoUrl}
+                onChange={(e) => handleChange('logoUrl', e.target.value)}
+                className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none"
+                placeholder="https://example.com/logo.png"
+              />
+              <button className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center gap-2 cursor-pointer">
+                <Upload className="h-5 w-5" />
+                <span>上傳</span>
+              </button>
+            </div>
+            {settings.logoUrl && (
+              <div className="mt-4">
+                <p className="text-sm text-gray-600 mb-2">預覽：</p>
+                <img src={settings.logoUrl} alt="Logo" className="h-16" />
+              </div>
+            )}
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">聯繫信息</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">電子郵箱</label>
+                <input
+                  type="email"
+                  value={settings.contactEmail}
+                  onChange={(e) => handleChange('contactEmail', e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">公司地址</label>
+                <input
+                  type="text"
+                  value={settings.contactAddress}
+                  onChange={(e) => handleChange('contactAddress', e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">聯繫電話</label>
+                <input
+                  type="text"
+                  value={settings.contactPhone}
+                  onChange={(e) => handleChange('contactPhone', e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">工作時間</label>
+                <input
+                  type="text"
+                  value={settings.workingHours}
+                  onChange={(e) => handleChange('workingHours', e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">團隊板塊設置</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">團隊標題</label>
+                <input
+                  type="text"
+                  value={settings.teamTitle}
+                  onChange={(e) => handleChange('teamTitle', e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">團隊副標題</label>
+                <input
+                  type="text"
+                  value={settings.teamSubtitle}
+                  onChange={(e) => handleChange('teamSubtitle', e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">團隊描述</label>
+                <textarea
+                  value={settings.teamDescription}
+                  onChange={(e) => handleChange('teamDescription', e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#10B981] outline-none resize-none"
+                  rows={3}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
+export default EditSettings;
