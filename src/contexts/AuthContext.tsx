@@ -5,24 +5,26 @@ interface AuthContextType {
   logout: () => void;
 }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-const ADMIN_PASSWORD = 'admin123';
+const ADMIN_PASSWORD = 'i3zzq^Mwx9D(A*t';
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('adminAuth') === 'true';
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   useEffect(() => {
-    localStorage.setItem('adminAuth', isAuthenticated.toString());
-  }, [isAuthenticated]);
-  const login = (password: string) => {
+    const authStatus = localStorage.getItem('isAuthenticated');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+  const login = (password: string): boolean => {
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
+      localStorage.setItem('isAuthenticated', 'true');
       return true;
     }
     return false;
   };
   const logout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('adminAuth');
+    localStorage.removeItem('isAuthenticated');
   };
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
@@ -32,8 +34,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 }
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }
