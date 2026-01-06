@@ -29,7 +29,7 @@ import EditAppDownload from "./pages/admin/EditAppDownload.tsx";
 import EditContact from "./pages/admin/EditContact.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { ContentProvider } from "./contexts/ContentContext.tsx";
-import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
 import "./globals.css";
 // CODEROCKET
 const setupRouteChangeBridge = () => {
