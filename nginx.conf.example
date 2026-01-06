@@ -1,0 +1,39 @@
+# Nginx配置文件示例
+# 将此配置复制到宝塔面板的网站配置中
+server {
+    listen 80;
+    server_name asean-newenergy.com www.asean-newenergy.com;
+    # 强制HTTPS
+    return 301 https://$server_name$request_uri;
+}
+server {
+    listen 443 ssl http2;
+    server_name asean-newenergy.com www.asean-newenergy.com;
+    # SSL证书配置（Let's Encrypt自动生成）
+    ssl_certificate /www/server/panel/vhost/cert/asean-newenergy.com/fullchain.pem;
+    ssl_certificate_key /www/server/panel/vhost/cert/asean-newenergy.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    # 网站根目录
+    root /www/wwwroot/asean-newenergy.com;
+    index index.html;
+    # 关键配置：支持React Router
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+    # 静态资源缓存（7天）
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 7d;
+        add_header Cache-Control "public, immutable";
+    }
+    # 安全：禁止访问隐藏文件
+    location ~ /\. {
+        deny all;
+    }
+    # 日志文件
+    access_log /www/wwwlogs/asean-newenergy.com.log;
+    error_log /www/wwwlogs/asean-newenergy.com.error.log;
+}
