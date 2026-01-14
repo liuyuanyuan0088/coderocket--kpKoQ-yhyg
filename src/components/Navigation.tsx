@@ -27,19 +27,26 @@ function Navigation() {
       <div className="mx-auto px-4 max-w-[1200px]">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3 cursor-pointer">
-            <img
-              src={siteSettings.logoUrl}
-              alt={siteSettings.companyName}
-              className="h-16"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const span = document.createElement('span');
-                span.className = 'text-2xl font-bold text-[#10B981]';
-                span.textContent = siteSettings.companyName;
-                target.parentNode?.appendChild(span);
-              }}
-            />
+            {siteSettings.logoUrl ? (
+              <img
+                src={siteSettings.logoUrl}
+                alt={siteSettings.companyName}
+                className="h-16"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  if (target.nextSibling) return;
+                  const span = document.createElement('span');
+                  span.className = 'text-2xl font-bold text-[#10B981]';
+                  span.textContent = siteSettings.companyName;
+                  target.parentNode?.appendChild(span);
+                }}
+              />
+            ) : (
+              <span className="text-2xl font-bold text-[#10B981]">
+                {siteSettings.companyName}
+              </span>
+            )}
           </Link>
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item, index) => (
@@ -51,7 +58,7 @@ function Navigation() {
                   {item.label}
                 </Link>
                 {item.submenu && (
-                  <div className="absolute top-full left-0 mt-2 bg-white shadow-lg rounded-md py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <div className="absolute top-full left-0 mt-2 bg-white shadow-lg rounded-md py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[150px]">
                     {item.submenu.map((subitem, subindex) => (
                       <Link
                         key={subindex}
@@ -69,23 +76,24 @@ function Navigation() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 cursor-pointer"
+            aria-label="Toggle menu"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
         {isOpen && (
-          <div className="md:hidden pb-4">
+          <div className="md:hidden pb-4 border-t border-gray-100 mt-2">
             {navItems.map((item, index) => (
               <div key={index}>
                 <Link
                   to={item.href}
-                  className="block py-3 text-[#333333] hover:text-[#10B981] transition-colors cursor-pointer"
-                  onClick={() => setIsOpen(false)}
+                  className="block py-3 text-[#333333] hover:text-[#10B981] transition-colors cursor-pointer font-medium"
+                  onClick={() => !item.submenu && setIsOpen(false)}
                 >
                   {item.label}
                 </Link>
                 {item.submenu && (
-                  <div className="pl-4">
+                  <div className="pl-4 border-l-2 border-[#ECF0F6] ml-2">
                     {item.submenu.map((subitem, subindex) => (
                       <Link
                         key={subindex}

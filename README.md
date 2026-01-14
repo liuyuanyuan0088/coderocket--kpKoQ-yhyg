@@ -1,128 +1,117 @@
-# 東盟新能資產管理有限公司
-专注于东盟地区新能源资产投资管理的专业机构。
-## 🌐 网站地址
-## 📋 项目概述
-这是一个使用 React + TypeScript + Vite + Tailwind CSS 构建的企业官网，包含完整的内容管理系统。
+# 東盟新能資產管理有限公司 官方網站
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com)
+[![React](https://img.shields.io/badge/React-19.1-61dafb.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38bdf8.svg)](https://tailwindcss.com/)
+> 專注于東盟地區新能源資產投資管理的專業機構官方網站
+## 🌐 在線訪問
 ## ✨ 主要功能
-### 前台网站
-### 管理后台
-## 🚀 快速开始
-### 安装依赖
+### 前台網站
+### 管理後台 (CMS)
+## 🚀 技術棧
+### 核心技術
+### UI 組件
+### 狀態管理
+## 📦 快速開始
+### 安裝依賴
 ```bash
 npm install
 ```
-### 开发环境
+### 開發環境
 ```bash
 npm run dev
 ```
-访问: http://localhost:5173
-### 构建生产版本
+訪問: http://localhost:5173
+### 構建生產版本
 ```bash
 npm run build
 ```
-### 预览生产版本
+### 預覽生產版本
 ```bash
 npm run preview
 ```
-## 🔐 管理后台
-### 访问地址
+## 🔐 管理後台
+### 訪問地址
 ```
 https://asean-newenergy.com/admin/login
 ```
-### 默认密码
+### 默認密碼
 ```
-admin123
+i3zzq^Mwx9D(A*t
 ```
-### 修改密码
-编辑 `src/contexts/AuthContext.tsx`:
+### 修改密碼
+編輯 `src/contexts/AuthContext.tsx`:
 ```typescript
 const ADMIN_PASSWORD = 'your-new-password';
 ```
-## 📁 项目结构
+## 📁 項目結構
 ```
 project/
 ├── src/
-│   ├── components/          # UI 组件
-│   │   ├── Navigation.tsx
-│   │   ├── Footer.tsx
-│   │   ├── Hero.tsx
-│   │   ├── About.tsx
-│   │   └── CoreValues.tsx
+│   ├── components/          # UI 組件
+│   │   ├── Navigation.tsx   # 導航欄
+│   │   ├── Footer.tsx       # 頁腳
+│   │   ├── Hero.tsx         # 輪播圖
+│   │   ├── About.tsx        # 關於卡片
+│   │   └── CoreValues.tsx   # 核心價值觀
 │   │
-│   ├── pages/              # 页面组件
+│   ├── pages/              # 頁面組件
 │   │   ├── CompanyCulture.tsx
 │   │   ├── Services.tsx
 │   │   ├── AboutUs.tsx
 │   │   ├── News.tsx
-│   │   ├── CompanyNews.tsx
-│   │   ├── IndustryNews.tsx
-│   │   ├── FAQ.tsx
 │   │   ├── Contact.tsx
 │   │   ├── AppDownload.tsx
 │   │   │
-│   │   └── admin/          # 管理后台
+│   │   └── admin/          # 管理後台
 │   │       ├── AdminLogin.tsx
 │   │       ├── AdminDashboard.tsx
-│   │       └── Edit*.tsx
+│   │       └── Edit*.tsx   # 各種編輯頁面
 │   │
-│   ├── contexts/           # 全局状态
+│   ├── contexts/           # 全局狀態
 │   │   ├── ContentContext.tsx
 │   │   └── AuthContext.tsx
 │   │
 │   ├── config/             # 配置
 │   │   └── site.ts
 │   │
-│   ├── App.tsx
-│   ├── main.tsx
-│   └── globals.css
+│   ├── App.tsx             # 主應用
+│   ├── main.tsx            # 入口文件
+│   └── globals.css         # 全局樣式
 │
-├── public/
-├── vercel.json
-├── vite.config.ts
-└── package.json
+├── public/                 # 靜態資源
+├── index.html             # HTML 模板
+├── package.json           # 依賴配置
+├── vite.config.ts         # Vite 配置
+├── tailwind.config.js     # Tailwind 配置
+└── tsconfig.json          # TypeScript 配置
 ```
-## 🛠️ 技术栈
-## 📝 内容管理
-所有内容存储在浏览器的 localStorage 中：
-## 🎨 样式定制
-主题色在 `tailwind.config.js` 和 `src/globals.css` 中配置。
-主要颜色：
-## 🔄 数据同步
-1. 在管理后台编辑内容
-2. 点击"保存更改"
-3. 数据保存到 localStorage
-4. 前台页面自动读取最新数据
-5. 刷新页面查看更新
-## 📱 响应式设计
-## 🌐 SEO 优化
+## 🎨 主題色彩
+## 📝 內容管理
+所有內容存儲在瀏覽器的 localStorage 中：
+## 🔄 數據同步
+1. 在管理後台編輯內容
+2. 點擊"保存更改"
+3. 數據自動保存到 localStorage
+4. 前台頁面實時讀取最新數據
+5. 刷新頁面查看更新
+## 📱 響應式設計
+## 🌐 SEO 優化
 ## 🚀 部署
-### Vercel 部署（推荐）
-1. **连接 Git 仓库**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin <your-repo-url>
-   git push -u origin main
-   ```
-2. **Vercel 自动部署**
-   - 登录 Vercel Dashboard
-   - Import Git Repository
-   - 选择项目
-   - 点击 Deploy
-3. **配置自定义域名**
-   - 进入 Project Settings → Domains
-   - 添加 `asean-newenergy.com`
-   - 按照提示配置 DNS
-### 手动部署
+### Vercel 部署（推薦）
+1. 連接 Git 倉庫到 Vercel
+2. 自動檢測 Vite 項目
+3. 一鍵部署
+### 手動部署
 ```bash
 npm run build
-# 将 dist/ 目录上传到服务器
+# 將 dist/ 目錄上傳到服務器
 ```
-## 📊 浏览器支持
-## 🤝 贡献
-欢迎提交 Issues 和 Pull Requests！
-## 📄 许可证
+## 📊 瀏覽器支持
+## 🤝 貢獻指南
+歡迎提交 Issues 和 Pull Requests！
+## 📄 許可證
 © 2024 東盟新能資產管理有限公司. All rights reserved.
-## 📞 联系方式
+## 📞 聯繫方式
 Made with ❤️ using React + TypeScript + Vite + Tailwind CSS
+**Version 2.0.0** - 最新版本 | 2024年1月
