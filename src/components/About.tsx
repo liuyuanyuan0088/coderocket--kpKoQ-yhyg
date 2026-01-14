@@ -7,10 +7,8 @@ function About() {
       <div className="mx-auto px-4 max-w-[1200px]">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-[#10B981] mb-4">{homePageTexts.aboutSectionTitle}</h2>
-          <p className="text-lg text-[#5A5A5A] mb-3">{homePageTexts.aboutSectionSubtitle}</p>
-          <p className="text-base text-[#666666]">
-            {homePageTexts.aboutSectionDescription}
-          </p>
+          <p className="text-lg text-[#5A5A5A] mb-2">{homePageTexts.aboutSectionSubtitle}</p>
+          <p className="text-base text-[#666666]">{homePageTexts.aboutSectionDescription}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {aboutCards.map((card, index) => (
@@ -19,7 +17,7 @@ function About() {
               to={
                 card.title === '公司文化' ? '/company-culture' :
                 card.title === '服務與解決方案' ? '/services' :
-                card.title === '關於我們' ? '/about' : '/'
+                '/about'
               }
               className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer"
             >

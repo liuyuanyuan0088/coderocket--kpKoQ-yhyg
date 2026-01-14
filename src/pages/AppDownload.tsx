@@ -60,11 +60,15 @@ function AppDownload() {
                 <p className="text-[#666666] mb-4">{appDownloadContent.qrCodeDescription}</p>
                 <div className="flex justify-center gap-8">
                   <div className="text-center">
-                    <img src={appDownloadContent.iosQRCode} alt="iOS QR Code" className="w-32 h-32 border-2 border-[#10B981] rounded-lg mb-2" />
+                    <div className="w-32 h-32 bg-white border-2 border-[#10B981] rounded-lg mb-2 flex items-center justify-center">
+                      <img src={appDownloadContent.iosQRCode} alt="iOS QR Code" className="w-full h-full object-contain" />
+                    </div>
                     <p className="text-sm text-[#666666]">iOS版本</p>
                   </div>
                   <div className="text-center">
-                    <img src={appDownloadContent.androidQRCode} alt="Android QR Code" className="w-32 h-32 border-2 border-[#10B981] rounded-lg mb-2" />
+                    <div className="w-32 h-32 bg-white border-2 border-[#10B981] rounded-lg mb-2 flex items-center justify-center">
+                      <img src={appDownloadContent.androidQRCode} alt="Android QR Code" className="w-full h-full object-contain" />
+                    </div>
                     <p className="text-sm text-[#666666]">Android版本</p>
                   </div>
                 </div>

@@ -31,13 +31,6 @@ export default function AdminDashboard() {
       color: 'from-pink-500 to-pink-600'
     },
     {
-      title: '頁腳管理',
-      description: '編輯頁腳的聯繫信息和鏈接',
-      icon: '📍',
-      link: '/admin/footer',
-      color: 'from-gray-500 to-gray-600'
-    },
-    {
       title: '關於卡片管理',
       description: '編輯首頁的關於我們卡片',
       icon: '📋',
