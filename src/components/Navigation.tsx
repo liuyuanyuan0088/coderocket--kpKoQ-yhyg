@@ -31,6 +31,14 @@ function Navigation() {
               src={siteSettings.logoUrl}
               alt={siteSettings.companyName}
               className="h-16"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const span = document.createElement('span');
+                span.className = 'text-2xl font-bold text-[#10B981]';
+                span.textContent = siteSettings.companyName;
+                target.parentNode?.appendChild(span);
+              }}
             />
           </Link>
           <div className="hidden md:flex items-center gap-8">

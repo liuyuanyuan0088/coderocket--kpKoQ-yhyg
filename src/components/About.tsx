@@ -21,11 +21,15 @@ function About() {
               }
               className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer"
             >
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-48 overflow-hidden bg-gray-200">
                 <img
                   src={card.image}
                   alt={card.title}
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=400&auto=format&fit=crop';
+                  }}
                 />
               </div>
               <div className="p-6">

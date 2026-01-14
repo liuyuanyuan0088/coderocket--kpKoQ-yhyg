@@ -19,15 +19,25 @@ function AboutUs() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {teamMembers.map((member, index) => (
                   <div key={index} className="bg-white border-2 border-[#ECF0F6] rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    {member.avatar && (
-                      <div className="flex justify-center mb-4">
+                    <div className="flex justify-center mb-4">
+                      {member.avatar ? (
                         <img
                           src={member.avatar}
                           alt={member.name}
                           className="w-32 h-32 rounded-full object-cover border-4 border-[#10B981]"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=256&auto=format&fit=crop';
+                          }}
                         />
-                      </div>
-                    )}
+                      ) : (
+                        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#10B981] to-[#059669] flex items-center justify-center border-4 border-[#10B981]">
+                          <span className="text-white text-4xl font-bold">
+                            {member.name.charAt(0)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                     <div className="text-center mb-4">
                       <h3 className="text-2xl font-bold text-[#10B981] mb-1">{member.name}</h3>
                       <p className="text-sm text-[#059669] mb-1">{member.nameEn}</p>

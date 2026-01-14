@@ -60,14 +60,44 @@ function AppDownload() {
                 <p className="text-[#666666] mb-4">{appDownloadContent.qrCodeDescription}</p>
                 <div className="flex justify-center gap-8">
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-white border-2 border-[#10B981] rounded-lg mb-2 flex items-center justify-center">
-                      <img src={appDownloadContent.iosQRCode} alt="iOS QR Code" className="w-full h-full object-contain" />
+                    <div className="w-32 h-32 bg-white border-2 border-[#10B981] rounded-lg mb-2 flex items-center justify-center overflow-hidden">
+                      <img 
+                        src={appDownloadContent.iosQRCode} 
+                        alt="iOS QR Code" 
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            const placeholder = document.createElement('div');
+                            placeholder.className = 'text-[#10B981] text-xs text-center p-2';
+                            placeholder.textContent = 'iOS QR';
+                            parent.appendChild(placeholder);
+                          }
+                        }}
+                      />
                     </div>
                     <p className="text-sm text-[#666666]">iOS版本</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-white border-2 border-[#10B981] rounded-lg mb-2 flex items-center justify-center">
-                      <img src={appDownloadContent.androidQRCode} alt="Android QR Code" className="w-full h-full object-contain" />
+                    <div className="w-32 h-32 bg-white border-2 border-[#10B981] rounded-lg mb-2 flex items-center justify-center overflow-hidden">
+                      <img 
+                        src={appDownloadContent.androidQRCode} 
+                        alt="Android QR Code" 
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            const placeholder = document.createElement('div');
+                            placeholder.className = 'text-[#10B981] text-xs text-center p-2';
+                            placeholder.textContent = 'Android QR';
+                            parent.appendChild(placeholder);
+                          }
+                        }}
+                      />
                     </div>
                     <p className="text-sm text-[#666666]">Android版本</p>
                   </div>
